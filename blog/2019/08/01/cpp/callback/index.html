@@ -58,14 +58,14 @@
 </script>
 
   <meta name="description" content="我们会经常碰到需要使用回调函数的场合，比如：异步socket、定时器、windows消息处理等等。这里将列出几种回调函数的实现机制，分析各自的优劣以供选择。">
-<meta name="keywords" content="cpp, callback">
+<meta name="keywords" content="cpp,callback">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++ 回调机制">
 <meta property="og:url" content="https://blog.xazeng.com/2019/08/01/cpp/callback/index.html">
 <meta property="og:site_name" content="Zen&#39;s Blog">
 <meta property="og:description" content="我们会经常碰到需要使用回调函数的场合，比如：异步socket、定时器、windows消息处理等等。这里将列出几种回调函数的实现机制，分析各自的优劣以供选择。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-01T12:28:08.196Z">
+<meta property="og:updated_time" content="2019-08-02T03:06:44.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c++ 回调机制">
 <meta name="twitter:description" content="我们会经常碰到需要使用回调函数的场合，比如：异步socket、定时器、windows消息处理等等。这里将列出几种回调函数的实现机制，分析各自的优劣以供选择。">
@@ -249,11 +249,21 @@
                 
               
 
-              <time title="创建时间：2019-08-01 15:15:19 / 修改时间：20:28:08" itemprop="dateCreated datePublished" datetime="2019-08-01T15:15:19+08:00">2019-08-01</time>
+              <time title="创建时间：2019-08-01 15:15:19" itemprop="dateCreated datePublished" datetime="2019-08-01T15:15:19+08:00">2019-08-01</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-08-02 11:06:44" itemprop="dateModified" datetime="2019-08-02T11:06:44+08:00">2019-08-02</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -288,94 +298,28 @@
 
 <p>将 <em>静态函数</em> 或 <em>静态成员函数</em> 作为回调函数的实现比较简单，而且除了像 std::sort 这种地方，一般很少会用到，这里就不多做说明了。下面列出的都是将 <em>成员函数</em> 作为回调函数的实现。</p>
 <hr>
-<h2 id="接口类"><a href="#接口类" class="headerlink" title="接口类"></a>接口类</h2><pre><code>class CallbackInterface
-{
-public:
-    virtual void onCallback() = 0;
-    ...
-};
+<h2 id="接口类"><a href="#接口类" class="headerlink" title="接口类"></a>接口类</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CallbackInterface</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">onCallback</span><span class="params">()</span> </span>= <span class="number">0</span>;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Callee</span> :</span> <span class="keyword">public</span> CallbackInterface</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">onCallback</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Caller</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">register</span><span class="params">(CallbackInterface* callback)</span> </span>&#123; ... &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        callback-&gt;onCallback();</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main</span></span><br><span class="line">caller.<span class="keyword">register</span>(&amp;callee);</span><br></pre></td></tr></table></figure>
 
-class Callee : public CallbackInterface
-{
-public:
-    virtual void onCallback() { ... }
-    ...
-};
-
-class Caller
-{
-public:
-    void register(CallbackInterface* callback) { ... }
-    void update()
-    {
-        ...
-        callback-&gt;onCallback();
-        ...
-    }
-    ...
-};
-
-// main
-caller.register(&amp;callee);</code></pre><p>这种方式适用于 Callee 和 CallbackInterface 自然符合继承语义的情况：Callee 是一种 CallbackInterface，而 Caller 作为管理者，面对的是一堆的 CallbackInterface，至于具体是哪个 Callee 在做事，又是怎么做的， Caller 并不需要知道。<br>如果 Callee 和 CallbackInterface 并不自然符合继承语义，最好不要使用这种方式，不然可能会碰到下列限制：</p>
+<p>这种方式适用于 Callee 和 CallbackInterface 自然符合继承语义的情况：Callee 是一种 CallbackInterface，而 Caller 作为管理者，面对的是一堆的 CallbackInterface，至于具体是哪个 Callee 在做事，又是怎么做的， Caller 并不需要知道。<br>如果 Callee 和 CallbackInterface 并不自然符合继承语义，最好不要使用这种方式，不然可能会碰到下列限制：</p>
 <ul>
 <li>需要定义 N 个 CallbackInterface，每个 CallbackInterface 需要定义具体接口函数。</li>
 <li>一个 Callee 可能需要继承多个 CallbackInterface，且各个 CallbackInterface 的接口函数不能同名。</li>
 <li>不支持一个 Callee 对应多个 Caller 的情况。</li>
 </ul>
 <hr>
-<h2 id="公共基类"><a href="#公共基类" class="headerlink" title="公共基类"></a>公共基类</h2><pre><code>class Object {...}
-typedef void(Object::*CALLBACK)();    
+<h2 id="公共基类"><a href="#公共基类" class="headerlink" title="公共基类"></a>公共基类</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Object</span> &#123;</span>...&#125;</span><br><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="title">void</span><span class="params">(Object::*CALLBACK)</span><span class="params">()</span></span>;    </span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Callee</span> :</span> <span class="keyword">public</span> Object</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCallback</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Caller</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">register</span><span class="params">(Object* obj, CALLBACK callback)</span> </span>&#123; ... &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        obj-&gt;*callback();</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main</span></span><br><span class="line">caller.<span class="keyword">register</span>(&amp;callee, (CALLBACK)(&amp;Callee::onCallback));</span><br></pre></td></tr></table></figure>
 
-class Callee : public Object
-{
-public:
-    void onCallback() { ... }
-    ...
-}
-
-class Caller
-{
-public:
-    void register(Object* obj, CALLBACK callback) { ... }
-    void update()
-    {
-        ...
-        obj-&gt;*callback();
-        ...
-    }
-    ...
-}
-
-// main
-caller.register(&amp;callee, (CALLBACK)(&amp;Callee::onCallback));</code></pre><p>cocos-2dx 3.0 之前的版本用的就是这种方式。<br>尽管它已经可以满足大多数需要回调函数的场合，但也还是有一些显而易见的缺点：</p>
+<p>cocos-2dx 3.0 之前的版本用的就是这种方式。<br>尽管它已经可以满足大多数需要回调函数的场合，但也还是有一些显而易见的缺点：</p>
 <ul>
 <li>所有的 Callee 需要继承自一个公共基类 Object。</li>
 <li>register 时需要做强制类型转换，这使得编译期无法对回调函数本身的参数类型和数量进行检查，如果不匹配将导致运行时错误。</li>
 <li>无法在 register 时传递不定参数给回调函数。</li>
 </ul>
 <hr>
-<h2 id="std-function"><a href="#std-function" class="headerlink" title="std::function"></a>std::function</h2><pre><code>class Callee
-{
-public:
-    void onCallback() { ... }
-    ...
-}
+<h2 id="std-function"><a href="#std-function" class="headerlink" title="std::function"></a>std::function</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Callee</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCallback</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Caller</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">register</span><span class="params">(<span class="keyword">const</span> <span class="built_in">std</span>::function&lt;<span class="keyword">void</span>()&gt;&amp; callback)</span> </span>&#123; ... &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        callback();</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main</span></span><br><span class="line">caller.<span class="keyword">register</span>(<span class="built_in">std</span>::bind(&amp;Callee::onCallback, callee));</span><br></pre></td></tr></table></figure>
 
-class Caller
-{
-public:
-    void register(const std::function&lt;void()&gt;&amp; callback) { ... }
-    void update()
-    {
-        ...
-        callback();
-        ...
-    }
-    ...
-}
 
-// main
-caller.register(std::bind(&amp;Callee::onCallback, callee));</code></pre><p>对比之前的实现，这种方式几乎解决了所有的缺点。</p>
+<p>对比之前的实现，这种方式几乎解决了所有的缺点。</p>
 <ul>
 <li>Callee 不需要继承公共基类或者回调接口类。</li>
 <li>多个 Callee 可以绑定于多个 Caller。</li>
@@ -383,28 +327,9 @@ caller.register(std::bind(&amp;Callee::onCallback, callee));</code></pre><p>对�
 <li>register 时还能传递不定参数给回调函数。</li>
 </ul>
 <hr>
-<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><pre><code>class Callee
-{
-public:
-    void onCallback() { ... }
-    ...
-}
+<h2 id="模板"><a href="#模板" class="headerlink" title="模板"></a>模板</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Callee</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">onCallback</span><span class="params">()</span> </span>&#123; ... &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Caller</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">register</span><span class="params">(<span class="keyword">const</span> CBFunctor0 &amp; callback)</span> </span>&#123; ... &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        callback();</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// main</span></span><br><span class="line">caller.<span class="keyword">register</span>(makeFunctor((CBFunctor0*)<span class="number">0</span>,callee,&amp;Callee::onCallback));</span><br></pre></td></tr></table></figure>
 
-class Caller
-{
-public:
-    void register(const CBFunctor0 &amp; callback) { ... }
-    void update()
-    {
-        ...
-        callback();
-        ...
-    }
-    ...
-}
-
-// main
-caller.register(makeFunctor((CBFunctor0*)0,callee,&amp;Callee::onCallback));</code></pre><p>需要包含一个回调函数库：<a href="http://www.tedfelix.com/software/callback.h" target="_blank" rel="noopener">http://www.tedfelix.com/software/callback.h</a><br>具体的实现原理和过程可以查看： <a href="http://www.tutok.sk/fastgl/callback.html" target="_blank" rel="noopener">http://www.tutok.sk/fastgl/callback.html</a><br>从使用者角度看，除了不能传递不定参数给回调函数，它跟 <em>std::function 方式</em> 几乎一样。<br>当所用编译器不支持 c++11 特性时，可以考虑用这种方式。</p>
+<p>需要包含一个回调函数库：<a href="http://www.tedfelix.com/software/callback.h" target="_blank" rel="noopener">http://www.tedfelix.com/software/callback.h</a><br>具体的实现原理和过程可以查看： <a href="http://www.tutok.sk/fastgl/callback.html" target="_blank" rel="noopener">http://www.tutok.sk/fastgl/callback.html</a><br>从使用者角度看，除了不能传递不定参数给回调函数，它跟 <em>std::function 方式</em> 几乎一样。<br>当所用编译器不支持 c++11 特性时，可以考虑用这种方式。</p>
 <hr>
 <p>肯定还有其它实现回调机制的方式，碰到的时候再加进来分析。<br>目前看来 <em>std::function 方式</em> 是一种比较完美的方案，但在实际应用中使用它也还是会碰到一些问题。<br>而且使用成员函数作为回调函数，还需要考虑当回调函数将被调用时，如何判断绑定的对象是否已经被销毁。<br>等等这些问题，后续将会有专门的篇幅进行探讨。</p>
 
@@ -418,7 +343,9 @@ caller.register(makeFunctor((CBFunctor0*)0,callee,&amp;Callee::onCallback));</co
           
         
         <div class="post-tags">
-            <a href="/blog/tags/cpp-callback/" rel="tag"># cpp, callback</a>
+            <a href="/blog/tags/cpp/" rel="tag"># cpp</a>
+          
+            <a href="/blog/tags/callback/" rel="tag"># callback</a>
           
         </div>
         <div class="post-nav">
@@ -483,7 +410,7 @@ caller.register(makeFunctor((CBFunctor0*)0,callee,&amp;Callee::onCallback));</co
         
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -533,7 +460,19 @@ caller.register(makeFunctor((CBFunctor0*)0,callee,&amp;Callee::onCallback));</co
         
           
         
-        <span class="site-state-item-count">6</span>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
