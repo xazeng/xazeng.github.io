@@ -57,19 +57,18 @@
   };
 </script>
 
-  <meta name="description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
-<meta name="keywords" content="c++11, c++">
+  <meta name="description" content="blog-md">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++11 条件变量">
-<meta property="og:url" content="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/index.html">
+<meta property="og:title" content="Zen&#39;s Blog">
+<meta property="og:url" content="https://blog.xazeng.com/2019/08/01/README/index.html">
 <meta property="og:site_name" content="Zen&#39;s Blog">
-<meta property="og:description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
+<meta property="og:description" content="blog-md">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-01T12:30:09.985Z">
+<meta property="og:updated_time" content="2019-08-01T12:42:28.724Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++11 条件变量">
-<meta name="twitter:description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
-  <link rel="canonical" href="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/">
+<meta name="twitter:title" content="Zen&#39;s Blog">
+<meta name="twitter:description" content="blog-md">
+  <link rel="canonical" href="https://blog.xazeng.com/2019/08/01/README/">
 
 
 <script id="page.configurations">
@@ -78,7 +77,7 @@
   };
 </script>
 
-  <title>c++11 条件变量 | Zen's Blog</title>
+  <title> | Zen's Blog</title>
   
 
 
@@ -215,7 +214,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/blog/2019/08/01/cpp/condition-variable/">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/blog/2019/08/01/README/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Zen">
@@ -229,7 +228,7 @@
       <header class="post-header">
 
         
-          <h1 class="post-title" itemprop="name headline">c++11 条件变量
+          <h1 class="post-title" itemprop="name headline">
 
               
             
@@ -249,26 +248,7 @@
                 
               
 
-              <time title="创建时间：2019-08-01 15:18:10 / 修改时间：20:30:09" itemprop="dateCreated datePublished" datetime="2019-08-01T15:18:10+08:00">2019-08-01</time>
-            </span>
-          
-            
-
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/cpp/" itemprop="url" rel="index"><span itemprop="name">cpp</span></a></span>
-
-                
-                
-              
+              <time title="创建时间：2019-08-01 20:42:28" itemprop="dateCreated datePublished" datetime="2019-08-01T20:42:28+08:00">2019-08-01</time>
             </span>
           
 
@@ -283,71 +263,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。</p>
-<p>本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。</p>
-<a id="more"></a>
-
-<p>先看下这个消息队列的最终实现：</p>
-<pre><code>void Push(void *msg)
-{
-    std::unique_lock&lt;std::mutex&gt; lock(m_mutex);
-    m_queue.push(msg);
-    lock.unlock();
-    m_cond.notify_one();
-
-    return;
-}
-
-void * WaitAndPop()
-{
-    void *msg = nullptr;
-
-    while (true)
-    {
-        std::unique_lock&lt;std::mutex&gt; lock(m_mutex);
-        if (!m_queue.empty())
-        {
-            msg = m_queue.front();
-            m_queue.pop();
-            return msg;
-        }
-
-        while(m_queue.empty()) m_cond.wait(lock);
-    }
-
-    // return nullptr;
-}</code></pre><hr>
-<h2 id="为什么需要搭配一个互斥量使用？"><a href="#为什么需要搭配一个互斥量使用？" class="headerlink" title="为什么需要搭配一个互斥量使用？"></a>为什么需要搭配一个互斥量使用？</h2><p>先假设不需要搭配互斥量使用，代码如下</p>
-<pre><code>// WaitAndPop
-mutex.lock();
-if (!queue.empty)
-{
-    // pop msg
-    ...
-}
-mutex.unlock();
-// 标注
-cond.wait();</code></pre><p>queue 会被不同线程使用，所以需要一个锁来同步。<br>这个锁必须在 cond.wait 前解锁，否则工作线程进入睡眠状态导致逻辑线程的 Push 无法获得锁。<br>那么问题来了，当 WaitAndPop 执行到 mutex.unlock 后 cond.wait 前时，逻辑线程执行了 Push ，意味着 <strong>cond.notify_one 在 cond.wait 前执行了</strong>。结果就是 <em>工作线程进入睡眠，但是消息队列中还有一个消息没被处理</em> 。如果后续没有新消息，那这个消息就只能永远呆在队列中了。<br>std::condition_variable::wait 需要一个锁作参数基本上避免了这种情况，但是不排除有的同学将这个锁和用来同步queue操作的锁分开来而导致这种情况。</p>
-<hr>
-<h2 id="Push-中调用-lock-unlock-和-cond-notify-one-的顺序问题"><a href="#Push-中调用-lock-unlock-和-cond-notify-one-的顺序问题" class="headerlink" title="Push 中调用 lock.unlock 和 cond.notify_one 的顺序问题"></a>Push 中调用 lock.unlock 和 cond.notify_one 的顺序问题</h2><p>这是个性能优化的问题，谁先谁后对结果并没有影响。</p>
-<ul>
-<li><p>unlock 在前，notify_one 在后。<br>  工作线程在被唤醒前，逻辑线程已经解锁，这使得工作线程在唤醒后就能直接获得锁进入处理流程。</p>
-</li>
-<li><p>notify_one  在前，unlock 在后。<br>  工作线程在被唤醒后，逻辑线程可能还没有解锁，这将导致工作线程无法获得锁而又进入睡眠状态等待锁。这里多了一次上下文切换，会损失一定性能。</p>
-</li>
-</ul>
-<hr>
-<h2 id="虚假唤醒"><a href="#虚假唤醒" class="headerlink" title="虚假唤醒"></a>虚假唤醒</h2><p>虚假唤醒的意思是即使没有调用 cond.notify_one , cond.wait 也有可能返回。<br>留意下面这段代码：</p>
-<pre><code>// WaitAndPop
-std::unique_lock&lt;std::mutex&gt; lock(m_mutex);
-if (!m_queue.empty())  // 位置1
-{
-    ...
-}
-
-while(m_queue.empty()) m_cond.wait(lock); // 位置2</code></pre><p><em>位置1</em> 就是对虚假唤醒的判断处理，这一步一定要做，而且还要在获得锁后做。</p>
-<p><em>位置2</em> 是对虚假唤醒的优化，避免虚假唤醒后去争夺锁。<br>while(m_queue.empty()) 在虚假唤醒后就不在 lock 的同步范围内了，但是因为这里只读，所以不存在同步问题。</p>
-
+        <h1 id="blog-md"><a href="#blog-md" class="headerlink" title="blog-md"></a>blog-md</h1>
     </div>
 
     
@@ -355,16 +271,10 @@ while(m_queue.empty()) m_cond.wait(lock); // 位置2</code></pre><p><em>位置1<
     
 
     <footer class="post-footer">
-          
-        
-        <div class="post-tags">
-            <a href="/blog/tags/c-11-c/" rel="tag"># c++11, c++</a>
-          
-        </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-              <a href="/blog/2019/08/01/cpp/callback/" rel="next" title="c++ 回调机制">
-                <i class="fa fa-chevron-left"></i> c++ 回调机制
+              <a href="/blog/2019/08/01/others/svn-server/" rel="next" title="svn server 简单部署">
+                <i class="fa fa-chevron-left"></i> svn server 简单部署
               </a>
             
           </div>
@@ -372,10 +282,6 @@ while(m_queue.empty()) m_cond.wait(lock); // 位置2</code></pre><p><em>位置1<
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-              <a href="/blog/2019/08/01/mysql/charset/" rel="prev" title="mysql 字符集处理">
-                mysql 字符集处理 <i class="fa fa-chevron-right"></i>
-              </a>
-            
           </div>
         </div>
     </footer>
@@ -498,7 +404,7 @@ while(m_queue.empty()) m_cond.wait(lock); // 位置2</code></pre><p><em>位置1<
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要搭配一个互斥量使用？"><span class="nav-number">1.</span> <span class="nav-text">为什么需要搭配一个互斥量使用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Push-中调用-lock-unlock-和-cond-notify-one-的顺序问题"><span class="nav-number">2.</span> <span class="nav-text">Push 中调用 lock.unlock 和 cond.notify_one 的顺序问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚假唤醒"><span class="nav-number">3.</span> <span class="nav-text">虚假唤醒</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#blog-md"><span class="nav-number">1.</span> <span class="nav-text">blog-md</span></a></li></ol></div>
             
 
           </div>
