@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
+<meta name="keywords" content="c++11, c++">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++11 条件变量">
+<meta property="og:url" content="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/index.html">
+<meta property="og:site_name" content="Zen&#39;s Blog">
+<meta property="og:description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-01T12:30:09.985Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="c++11 条件变量">
+<meta name="twitter:description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
+  <link rel="canonical" href="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/">
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>c++11 条件变量 | Zen's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+    </ul>
+    
+
+</nav>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zen's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">c++11 条件变量
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-01 15:18:10 / 修改时间：20:30:09" itemprop="dateCreated datePublished" datetime="2019-08-01T15:18:10+08:00">2019-08-01</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/cpp/" itemprop="url" rel="index"><span itemprop="name">cpp</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。</p>
+<p>本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。</p>
+<a id="more"></a>
+
+<p>先看下这个消息队列的最终实现：</p>
+<pre><code>void Push(void *msg)
+{
+    std::unique_lock&lt;std::mutex&gt; lock(m_mutex);
+    m_queue.push(msg);
+    lock.unlock();
+    m_cond.notify_one();
+
+    return;
+}
+
+void * WaitAndPop()
+{
+    void *msg = nullptr;
+
+    while (true)
+    {
+        std::unique_lock&lt;std::mutex&gt; lock(m_mutex);
+        if (!m_queue.empty())
+        {
+            msg = m_queue.front();
+            m_queue.pop();
+            return msg;
+        }
+
+        while(m_queue.empty()) m_cond.wait(lock);
+    }
+
+    // return nullptr;
+}</code></pre><hr>
+<h2 id="为什么需要搭配一个互斥量使用？"><a href="#为什么需要搭配一个互斥量使用？" class="headerlink" title="为什么需要搭配一个互斥量使用？"></a>为什么需要搭配一个互斥量使用？</h2><p>先假设不需要搭配互斥量使用，代码如下</p>
+<pre><code>// WaitAndPop
+mutex.lock();
+if (!queue.empty)
+{
+    // pop msg
+    ...
+}
+mutex.unlock();
+// 标注
+cond.wait();</code></pre><p>queue 会被不同线程使用，所以需要一个锁来同步。<br>这个锁必须在 cond.wait 前解锁，否则工作线程进入睡眠状态导致逻辑线程的 Push 无法获得锁。<br>那么问题来了，当 WaitAndPop 执行到 mutex.unlock 后 cond.wait 前时，逻辑线程执行了 Push ，意味着 <strong>cond.notify_one 在 cond.wait 前执行了</strong>。结果就是 <em>工作线程进入睡眠，但是消息队列中还有一个消息没被处理</em> 。如果后续没有新消息，那这个消息就只能永远呆在队列中了。<br>std::condition_variable::wait 需要一个锁作参数基本上避免了这种情况，但是不排除有的同学将这个锁和用来同步queue操作的锁分开来而导致这种情况。</p>
+<hr>
+<h2 id="Push-中调用-lock-unlock-和-cond-notify-one-的顺序问题"><a href="#Push-中调用-lock-unlock-和-cond-notify-one-的顺序问题" class="headerlink" title="Push 中调用 lock.unlock 和 cond.notify_one 的顺序问题"></a>Push 中调用 lock.unlock 和 cond.notify_one 的顺序问题</h2><p>这是个性能优化的问题，谁先谁后对结果并没有影响。</p>
+<ul>
+<li><p>unlock 在前，notify_one 在后。<br>  工作线程在被唤醒前，逻辑线程已经解锁，这使得工作线程在唤醒后就能直接获得锁进入处理流程。</p>
+</li>
+<li><p>notify_one  在前，unlock 在后。<br>  工作线程在被唤醒后，逻辑线程可能还没有解锁，这将导致工作线程无法获得锁而又进入睡眠状态等待锁。这里多了一次上下文切换，会损失一定性能。</p>
+</li>
+</ul>
+<hr>
+<h2 id="虚假唤醒"><a href="#虚假唤醒" class="headerlink" title="虚假唤醒"></a>虚假唤醒</h2><p>虚假唤醒的意思是即使没有调用 cond.notify_one , cond.wait 也有可能返回。<br>留意下面这段代码：</p>
+<pre><code>// WaitAndPop
+std::unique_lock&lt;std::mutex&gt; lock(m_mutex);
+if (!m_queue.empty())  // 位置1
+{
+    ...
+}
+
+while(m_queue.empty()) m_cond.wait(lock); // 位置2</code></pre><p><em>位置1</em> 就是对虚假唤醒的判断处理，这一步一定要做，而且还要在获得锁后做。</p>
+<p><em>位置2</em> 是对虚假唤醒的优化，避免虚假唤醒后去争夺锁。<br>while(m_queue.empty()) 在虚假唤醒后就不在 lock 的同步范围内了，但是因为这里只读，所以不存在同步问题。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/c-11-c/" rel="tag"># c++11, c++</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/08/01/cpp/callback/" rel="next" title="c++ 回调机制">
+                <i class="fa fa-chevron-left"></i> c++ 回调机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+              <a href="/2019/08/01/mysql/charset/" rel="prev" title="mysql 字符集处理">
+                mysql 字符集处理 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zen</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要搭配一个互斥量使用？"><span class="nav-number">1.</span> <span class="nav-text">为什么需要搭配一个互斥量使用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Push-中调用-lock-unlock-和-cond-notify-one-的顺序问题"><span class="nav-number">2.</span> <span class="nav-text">Push 中调用 lock.unlock 和 cond.notify_one 的顺序问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#虚假唤醒"><span class="nav-number">3.</span> <span class="nav-text">虚假唤醒</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  <script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+  
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.3.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

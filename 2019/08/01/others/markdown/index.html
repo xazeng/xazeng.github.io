@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。本文主要记录一些基本用法，供参考和记忆。">
+<meta name="keywords" content="software, markdown">
+<meta property="og:type" content="article">
+<meta property="og:title" content="markdown 基础">
+<meta property="og:url" content="https://blog.xazeng.com/2019/08/01/others/markdown/index.html">
+<meta property="og:site_name" content="Zen&#39;s Blog">
+<meta property="og:description" content="Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。本文主要记录一些基本用法，供参考和记忆。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-01T12:26:58.567Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="markdown 基础">
+<meta name="twitter:description" content="Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。本文主要记录一些基本用法，供参考和记忆。">
+  <link rel="canonical" href="https://blog.xazeng.com/2019/08/01/others/markdown/">
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>markdown 基础 | Zen's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+    </ul>
+    
+
+</nav>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/2019/08/01/others/markdown/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zen's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">markdown 基础
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-01 15:58:44 / 修改时间：20:26:58" itemprop="dateCreated datePublished" datetime="2019-08-01T15:58:44+08:00">2019-08-01</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/others/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。<br>本文主要记录一些基本用法，供参考和记忆。</p>
+<a id="more"></a>
+
+<hr>
+<h2 id="兼容-HTML"><a href="#兼容-HTML" class="headerlink" title="兼容 HTML"></a>兼容 HTML</h2><p>不需要任何标注就可以使用 HTML 标签。</p>
+<p>区块标签（比如：<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;p&gt;</code>、<code>&lt;pre&gt;</code> 等）必须在前后加上空行，且要求开始和结束标签不能用 tab 或空格来缩进。<br>区段标签（比如：<code>&lt;span&gt;</code>、<code>&lt;a&gt;</code>、<code>&lt;img&gt;</code> 等）则不受限制，可以在 Markdown 语法里任意使用。<br>值得注意的是 Markdown 语法在区块标签内是无效的，在区段标签内有效。</p>
+<p>尽量避免使用 style 标签，因为有些网站（比如 github）出于某种考虑会禁用这个标签。<br>实际上应该尽量避免直接使用 html 标签，因为使用 Markdown 的目的就在于简化格式语法，而不是让它更复杂。</p>
+<hr>
+<h2 id="特殊字符自动转换"><a href="#特殊字符自动转换" class="headerlink" title="特殊字符自动转换"></a>特殊字符自动转换</h2><p>某些特殊字符（比如：<code>&lt;</code>、<code>&amp;</code>）在 HTML 中必须以实体形式存在，这种实体形式在 Markdown 的语法中也是有效的。<br>当然 Markdown 允许直接使用这些特殊字符。</p>
+<hr>
+<h2 id="段落和换行"><a href="#段落和换行" class="headerlink" title="段落和换行"></a>段落和换行</h2><p>用前后至少一个空行来区分段落，段落内允许换行（两个空格加回车）。<br>普通段落不要用空格或者 tab 来首行缩进，因为空格和 tab 会被当成 Markdown 语法处理。</p>
+<hr>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><pre><code># 一级标题
+## 二级标题
+### 三级标题
+#### 四级标题
+##### 五级标题
+###### 六级标题</code></pre><hr>
+<h2 id="引言区块"><a href="#引言区块" class="headerlink" title="引言区块"></a>引言区块</h2><p>在每行前面加上 <code>&gt;</code> 就能产生一个区块引言。<br>Markdown 允许只在整个段落的第一行最前面加上 <code>&gt;</code> 。<br>引言的区块内可以使用其它 Markdown 语法，包括引言语法。</p>
+<pre><code>&gt; ## This is a header.
+&gt; 
+&gt; 1.   This is the first list item.
+&gt; 2.   This is the second list item.
+&gt; 
+&gt; Here&apos;s some example code:
+&gt; 
+&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);</code></pre><hr>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ul>
+<li><h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>  序号不影响结果的数字的顺序。</p>
+<pre><code>1. 文本1
+2. 文本2
+3. 文本3</code></pre></li>
+<li><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>  星号、加号和减号都可以作为无序列表标记</p>
+<pre><code>* 文本
+* 文本
+* 文本</code></pre></li>
+</ul>
+<p>列表项目可以包含多个段落。<br>列表项目下的段落、引言、和代码区块都必须先缩排 4 个空格或者一个 tab。</p>
+<hr>
+<h2 id="代码区块"><a href="#代码区块" class="headerlink" title="代码区块"></a>代码区块</h2><p>一个空行，加上每行缩进 4 个空格或者一个 tab ，就构成一个代码区块。</p>
+<pre><code>do
+{
+    for (int i=0; i&lt;10; i++)
+    {
+        printf(&quot;%02d\n&quot;, i);
+    }
+}while (false);</code></pre><hr>
+<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><pre><code>***
+* * *
+*****
+-----
+---------------------------------------</code></pre><hr>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul>
+<li><h4 id="行内"><a href="#行内" class="headerlink" title="行内"></a>行内</h4><pre><code>This is [an example](http://example.com/ &quot;Title&quot;) inline link. // 绝对路径
+See my [About](/about/) page for details. // 相对路径
+Example link: &lt;http://www.baidu.com&gt;.  //</code></pre></li>
+<li><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><pre><code>This is [an example][id] reference-style link.
+
+// 文档任意处，建议统一放在文档最后
+[id]: http://example.com/  &quot;Optional Title Here&quot;</code></pre><p>  这里的 id 可以是数字，也可以是字母。</p>
+</li>
+</ul>
+<hr>
+<h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>使用一个 <code>*</code> 或者 <code>_</code> 包围的文本会被转成用 <code>&lt;em&gt;</code> 标签包围。<br>使用两个 <code>*</code> 或者 <code>_</code> 包围的文本会被转成用 <code>&lt;strong&gt;</code> 标签包围。</p>
+<pre><code>*em*
+**strong**</code></pre><hr>
+<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><p>行内标记程序代码，可以用反引号 <code>`</code> 包围。</p>
+<pre><code>Use the `printf()` function.
+``There is a literal backtick (`) here.`` // 代码内有反引号
+A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><pre><code>![Alt text](/path/to/img.jpg &quot;optional title&quot;)
+
+![Alt text][id]
+[id]: url/to/image  &quot;Optional title attribute&quot;</code></pre><hr>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="noopener">Markdown: Syntax</a><br><a href="http://markdown.tw/" target="_blank" rel="noopener">Markdown 語法說明</a><br><a href="http://www.ituring.com.cn/article/504" target="_blank" rel="noopener">Markdown 语法说明</a><br><a href="http://www.zhihu.com/question/20409634" target="_blank" rel="noopener">知乎：怎样引导新手使用 Markdown</a>  </p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+        
+        <div class="post-tags">
+            <a href="/tags/software-markdown/" rel="tag"># software, markdown</a>
+          
+        </div>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/08/01/mysql/reconnect/" rel="next" title="mysql 重连处理">
+                <i class="fa fa-chevron-left"></i> mysql 重连处理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+              <a href="/2019/08/01/others/visual-studio/" rel="prev" title="visual studio 技巧">
+                visual studio 技巧 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zen</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#兼容-HTML"><span class="nav-number">1.</span> <span class="nav-text">兼容 HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊字符自动转换"><span class="nav-number">2.</span> <span class="nav-text">特殊字符自动转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段落和换行"><span class="nav-number">3.</span> <span class="nav-text">段落和换行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标题"><span class="nav-number">4.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引言区块"><span class="nav-number">5.</span> <span class="nav-text">引言区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">6.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有序列表"><span class="nav-number">6.0.1.</span> <span class="nav-text">有序列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无序列表"><span class="nav-number">6.0.2.</span> <span class="nav-text">无序列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码区块"><span class="nav-number">7.</span> <span class="nav-text">代码区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分隔线"><span class="nav-number">8.</span> <span class="nav-text">分隔线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接"><span class="nav-number">9.</span> <span class="nav-text">链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#行内"><span class="nav-number">9.0.1.</span> <span class="nav-text">行内</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">9.0.2.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强调"><span class="nav-number">10.</span> <span class="nav-text">强调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序代码"><span class="nav-number">11.</span> <span class="nav-text">程序代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">12.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">13.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  <script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+  
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.3.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

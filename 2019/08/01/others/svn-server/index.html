@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="generator" content="Hexo 3.9.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    search: {
+      root: '/',
+      path: ''
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    }
+  };
+</script>
+
+  <meta name="description" content="记录一次 svn 服务器的简单部署。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="svn server 简单部署">
+<meta property="og:url" content="https://blog.xazeng.com/2019/08/01/others/svn-server/index.html">
+<meta property="og:site_name" content="Zen&#39;s Blog">
+<meta property="og:description" content="记录一次 svn 服务器的简单部署。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-01T08:01:47.827Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="svn server 简单部署">
+<meta name="twitter:description" content="记录一次 svn 服务器的简单部署。">
+  <link rel="canonical" href="https://blog.xazeng.com/2019/08/01/others/svn-server/">
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>svn server 简单部署 | Zen's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+    <ul id="menu" class="menu">
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+    </ul>
+    
+
+</nav>
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/2019/08/01/others/svn-server/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zen's Blog">
+    </span>
+      <header class="post-header">
+
+        
+          <h1 class="post-title" itemprop="name headline">svn server 简单部署
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-08-01 16:00:49 / 修改时间：16:01:47" itemprop="dateCreated datePublished" datetime="2019-08-01T16:00:49+08:00">2019-08-01</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/others/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          <br>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>记录一次 svn 服务器的简单部署。</p>
+<a id="more"></a>
+
+
+<h4 id="安装-apache"><a href="#安装-apache" class="headerlink" title="安装 apache"></a>安装 <em>apache</em></h4><pre><code>yum install httpd</code></pre><h4 id="安装-svn-服务器"><a href="#安装-svn-服务器" class="headerlink" title="安装 svn 服务器"></a>安装 <em>svn</em> 服务器</h4><pre><code>yum install subversion mod_dav_svn
+// mod_dav_svn 是appache访问svn的模块</code></pre><h4 id="准备目录和文件"><a href="#准备目录和文件" class="headerlink" title="准备目录和文件"></a>准备目录和文件</h4><pre><code>/data/svn/repos  // 所有仓库都放在这个目录下
+/data/svn/http-auth    // 用户密码和权限等配置文件目录
+
+htpasswd -cm /data/svn/http-auth/passwd username    // 创建用户
+touch /data/svn/http-auth/authz</code></pre><h4 id="在-apache-下配置-svn"><a href="#在-apache-下配置-svn" class="headerlink" title="在 apache 下配置 svn"></a>在 <em>apache</em> 下配置 <em>svn</em></h4><pre><code>创建 /etc/httpd/conf.d/subversion.conf 文件，内容为：
+
+&lt;Location /svn/&gt;
+    DAV svn
+    SVNListParentPath on
+    SVNParentPath /data/svn/repos/
+    AuthType Basic
+    AuthName &quot;Subversion repos&quot;
+    AuthzSVNAccessFile /data/svn/http-auth/authz
+    AuthUserFile /data/svn/http-auth/passwd
+    Require valid-user
+&lt;/Location&gt;</code></pre><h4 id="搭建-if-svnadmin"><a href="#搭建-if-svnadmin" class="headerlink" title="搭建 if.svnadmin"></a>搭建 if.svnadmin</h4><h4 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h4><pre><code>systemctl start httpd
+svnserve -d -r /data/svn/repos/</code></pre><h4 id="用户修改密码"><a href="#用户修改密码" class="headerlink" title="用户修改密码"></a>用户修改密码</h4><pre><code>创建 /etc/httpd/conf.d/svnpasswd.conf 文件，内容为：
+&lt;Location /svnpasswd/&gt;
+    AuthType Basic
+    AuthName &quot;Subversion password modity&quot;
+    AuthUserFile /data/svn/http-auth/passwd
+    Require valid-user
+&lt;/Location&gt;
+
+创建 /var/www/html/svnpasswd/index.php，内容为：
+
+&lt;?php
+$username = $_SERVER[&quot;PHP_AUTH_USER&quot;]; //经过 AuthType Basic 认证的用户名
+$authed_pass = $_SERVER[&quot;PHP_AUTH_PW&quot;]; //经过 AuthType Basic 认证的密码
+$input_oldpass = (isset($_REQUEST[&quot;oldpass&quot;]) ? $_REQUEST[&quot;oldpass&quot;] : &quot;&quot;); //从界面上输入的原密码
+$newpass = (isset($_REQUEST[&quot;newpass&quot;]) ? $_REQUEST[&quot;newpass&quot;] : &quot;&quot;); //界面上输入的新密码
+$repeatpass = (isset($_REQUEST[&quot;repeatpass&quot;]) ? $_REQUEST[&quot;repeatpass&quot;] : &quot;&quot;); //界面上输入的重复密码
+$action = (isset($_REQUEST[&quot;action&quot;]) ? $_REQUEST[&quot;action&quot;] : &quot;&quot;); //以hide方式提交到服务器的action
+
+if($action!=&quot;modify&quot;){
+$action = &quot;view&quot;;
+}
+else if($authed_pass!=$input_oldpass){
+$action = &quot;oldpasswrong&quot;;
+}
+else if(empty($newpass)){
+$action = &quot;passempty&quot;;
+}
+else if($newpass!=$repeatpass){
+$action = &quot;passnotsame&quot;;
+}
+else{
+$action = &quot;modify&quot;;
+}
+?&gt;
+
+&lt;html&gt;
+&lt;head&gt;
+&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=GBK&quot;&gt;
+&lt;title&gt;Subversion 在线自助密码修改&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+
+&lt;?php
+//action=view 显示普通的输入信息
+if ($action == &quot;view&quot;){
+?&gt;
+&lt;script language = &quot;javaScript&quot;&gt;
+&lt;!--
+function loginIn(myform)
+{
+var newpass=myform.newpass.value;
+var repeatpass=myform.repeatpass.value;
+
+if(newpass==&quot;&quot;){
+alert(&quot;请输入密码！&quot;);
+return false;
+}
+
+if(repeatpass==&quot;&quot;){
+alert(&quot;请重复输入密码！&quot;);
+return false;
+}
+
+if(newpass!=repeatpass){
+alert(&quot;两次输入密码不一致，请重新输入！&quot;);
+return false;
+}
+return true;
+}
+//--&gt;
+&lt;/script&gt;
+&lt;style type=&quot;text/css&quot;&gt;
+&lt;!--
+table {
+border: 1px solid #CCCCCC;
+background-color: #f9f9f9;
+text-align: center;
+vertical-align: middle;
+font-size: 9pt;
+line-height: 15px;
+}
+th {
+font-weight: bold;
+line-height: 20px;
+border-top-width: 1px;
+border-right-width: 1px;
+border-bottom-width: 1px;
+border-left-width: 1px;
+border-bottom-style: solid;
+color: #333333;
+background-color: f6f6f6;
+}
+input{
+height: 18px;
+}
+.button {
+height: 20px;
+}
+
+--&gt;
+&lt;/style&gt;
+&lt;br&gt;&lt;br&gt;&lt;br&gt;
+&lt;form method=&quot;post&quot;&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;action&quot; value=&quot;modify&quot;/&gt;
+&lt;table width=&quot;220&quot; cellpadding=&quot;3&quot; cellspacing=&quot;8&quot; align=&quot;center&quot;&gt;
+&lt;tr&gt;
+&lt;th colspan=2&gt;Subversion 密码修改&lt;/th&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;用户名：&lt;/td&gt;
+&lt;td align=&quot;left&quot;&gt; &lt;?php echo $username?&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;原密码：&lt;/td&gt;
+&lt;td&gt;&lt;input type=password size=12 name=oldpass&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;用户密码：&lt;/td&gt;
+&lt;td&gt;&lt;input type=password size=12 name=newpass&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;确认密码：&lt;/td&gt;
+&lt;td&gt;&lt;input type=password size=12 name=repeatpass&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td colspan=2&gt;
+&lt;input onclick=&quot;return loginIn(this.form)&quot; class=&quot;button&quot; type=submit value=&quot;修 改&quot;&gt;
+&lt;input name=&quot;reset&quot; type=reset class=&quot;button&quot; value=&quot;取 消&quot;&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/form&gt;
+&lt;?php
+}
+else if($action == &quot;oldpasswrong&quot;){
+$msg=&quot;原密码错误！&quot;;
+}
+else if($action == &quot;passempty&quot;){
+$msg=&quot;请输入新密码！&quot;;
+}
+else if($action == &quot;passnotsame&quot;){
+$msg=&quot;两次输入密码不一致，请重新输入！&quot;;
+}
+else{
+$passwdfile=&quot;/data/svn/http-auth/passwd&quot;;
+$command=&quot;htpasswd -b &quot;.$passwdfile.&quot; &quot;.$username.&quot; &quot;.$newpass;
+system($command, $result);
+if($result==0){
+$msg=&quot;用户[&quot;.$username.&quot;]密码修改成功，请用新密码登陆.&quot;;
+}
+else{
+$msg=&quot;用户[&quot;.$username.&quot;]密码修改失败，返回值为&quot;.$result.&quot;，请和管理员联系！&quot;;
+}
+}
+
+if (isset($msg)){
+?&gt;
+&lt;script language=&quot;javaScript&quot;&gt;
+&lt;!--
+alert(&quot;&lt;?php echo $msg?&gt;&quot;);
+window.location.href=&quot;&lt;?php echo $_SERVER[&quot;PHP_SELF&quot;]?&gt;&quot;
+//--&gt;
+&lt;/script&gt;
+&lt;?php
+}
+?&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+              <a href="/2019/08/01/unity/mouse_event/" rel="next" title="unity 鼠标事件">
+                <i class="fa fa-chevron-left"></i> unity 鼠标事件
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+          </div>
+        </div>
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zen</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+
+
+
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-apache"><span class="nav-number">1.</span> <span class="nav-text">安装 apache</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装-svn-服务器"><span class="nav-number">2.</span> <span class="nav-text">安装 svn 服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#准备目录和文件"><span class="nav-number">3.</span> <span class="nav-text">准备目录和文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#在-apache-下配置-svn"><span class="nav-number">4.</span> <span class="nav-text">在 apache 下配置 svn</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#搭建-if-svnadmin"><span class="nav-number">5.</span> <span class="nav-text">搭建 if.svnadmin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动"><span class="nav-number">6.</span> <span class="nav-text">启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#用户修改密码"><span class="nav-number">7.</span> <span class="nav-text">用户修改密码</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zen</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  <script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
+
+  
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script>
+<script src="/js/post-details.js?v=7.3.0"></script>
+
+
+
+  <script src="/js/next-boot.js?v=7.3.0"></script>
+
+  
+
+  
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
