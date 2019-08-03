@@ -301,24 +301,6 @@
                 <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
               </span>
             </span>
-          
-            
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="fa fa-comment-o"></i>
-    </span>
-    
-      <span class="post-meta-item-text">评论数：</span>
-    
-  
-    <a href="/blog/2019/08/01/unity/mouse_event/#comments" itemprop="discussionUrl">
-      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/01/unity/mouse_event/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
           <br>
 
         </div>
@@ -390,13 +372,7 @@
           </div>
           
     
-    
-  <div class="comments" id="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
-    </div>
-  </div>
-  
+    <div class="comments" id="gitalk-container"></div>
   
 
 
@@ -650,47 +626,23 @@
 
 
     
-<script>
-  function loadCount() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://zens-blog.disqus.com/count.js';
-    s.id = 'dsq-count-scr';
-    (d.head || d.body).appendChild(s);
-  }
-  // defer loading until the whole page loading is completed
-  window.addEventListener('load', loadCount, false);
-</script>
-<script>
-  var disqus_config = function() {
-    this.page.url = "https://blog.xazeng.com/2019/08/01/unity/mouse_event/";
-    this.page.identifier = "2019/08/01/unity/mouse_event/";
-    this.page.title = 'unity 鼠标事件';};
-  function loadComments() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://zens-blog.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', '' + +new Date());
-    (d.head || d.body).appendChild(s);
-  }
-    $(function() {
-      var offsetTop = $('#comments').offset().top - $(window).height();
-      if (offsetTop <= 0) {
-        // load directly when there's no a scrollbar
-        window.addEventListener('load', loadComments, false);
-      } else {
-        $(window).on('scroll.disqus_scroll', function() {
-          // offsetTop may changes because of manually resizing browser window or lazy loading images.
-          var offsetTop = $('#comments').offset().top - $(window).height();
-          var scrollTop = $(window).scrollTop();
+<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
 
-          // pre-load comments a bit? (margin or anything else)
-          if (offsetTop - scrollTop < 60) {
-            $(window).off('.disqus_scroll');
-            loadComments();
-          }
-        });
-      }
-    });
-  
+<script>
+  var gitalk = new Gitalk({
+    clientID: 'fe7a3d11c21f79f6b093# GitHub Application Client ID',
+    clientSecret: '4864c1982f4102ce367bd17735d807832809a76c# GitHub Application Client Secret',
+    repo: 'https://github.com/xazeng/blog-md.git# Repository name to store issues',
+    owner: 'xazeng# GitHub repo owner',
+    admin: ['xazeng# GitHub repo owner and collaborators, only these guys can initialize gitHub issues'],
+    id: md5(location.pathname),
+      language: 'zh-CN',
+    
+    distractionFreeMode: 'true'
+  });
+  gitalk.render('gitalk-container');
 </script>
 
 
