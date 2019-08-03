@@ -58,7 +58,7 @@
 </script>
 
   <meta name="description" content="刚开始学习 unity，鼠标事件处理或是入门会遇到的一个难点。其实说难不难，只是刚开始学，很多概念没有，所以比较容易疑惑。">
-<meta name="keywords" content="unity,ide">
+<meta name="keywords" content="ide,unity">
 <meta property="og:type" content="article">
 <meta property="og:title" content="unity 鼠标事件">
 <meta property="og:url" content="https://blog.xazeng.com/2019/08/01/unity/mouse_event/index.html">
@@ -80,6 +80,16 @@
 
   <title>unity 鼠标事件 | Zen's Blog</title>
   
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1# <app_id>"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-100898985-1# <app_id>');
+    }
+  </script>
 
 
 
@@ -282,6 +292,33 @@
             </span>
           
 
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon"
+              >
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="fa fa-comment-o"></i>
+    </span>
+    
+      <span class="post-meta-item-text">评论数：</span>
+    
+  
+    <a href="/blog/2019/08/01/unity/mouse_event/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/01/unity/mouse_event/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
           <br>
 
         </div>
@@ -318,15 +355,15 @@
           
         
         <div class="post-tags">
-            <a href="/blog/tags/unity/" rel="tag"># unity</a>
-          
             <a href="/blog/tags/ide/" rel="tag"># ide</a>
+          
+            <a href="/blog/tags/unity/" rel="tag"># unity</a>
           
         </div>
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
-              <a href="/blog/2019/08/01/others/visual-studio/" rel="next" title="visual studio 技巧">
-                <i class="fa fa-chevron-left"></i> visual studio 技巧
+              <a href="/blog/2019/08/01/others/markdown/" rel="next" title="markdown 基础">
+                <i class="fa fa-chevron-left"></i> markdown 基础
               </a>
             
           </div>
@@ -334,8 +371,8 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-              <a href="/blog/2019/08/01/others/svn-server/" rel="prev" title="svn server 简单部署">
-                svn server 简单部署 <i class="fa fa-chevron-right"></i>
+              <a href="/blog/2019/08/01/others/visual-studio/" rel="prev" title="visual studio 技巧">
+                visual studio 技巧 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -352,6 +389,15 @@
 
           </div>
           
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
 
 
         </div>
@@ -501,6 +547,25 @@
   <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
 
 
 
@@ -583,6 +648,50 @@
 
 
 
+
+    
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://zens-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.xazeng.com/2019/08/01/unity/mouse_event/";
+    this.page.identifier = "2019/08/01/unity/mouse_event/";
+    this.page.title = 'unity 鼠标事件';};
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://zens-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
 
 
 </body>

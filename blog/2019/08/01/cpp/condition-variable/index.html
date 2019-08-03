@@ -58,7 +58,7 @@
 </script>
 
   <meta name="description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
-<meta name="keywords" content="cpp,cpp11">
+<meta name="keywords" content="cpp11,cpp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++11 条件变量">
 <meta property="og:url" content="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/index.html">
@@ -80,6 +80,16 @@
 
   <title>c++11 条件变量 | Zen's Blog</title>
   
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1# <app_id>"></script>
+  <script>
+    var host = window.location.hostname;
+    if (host !== "localhost" || !true) {
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-100898985-1# <app_id>');
+    }
+  </script>
 
 
 
@@ -282,6 +292,33 @@
             </span>
           
 
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon"
+              >
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
+            
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="fa fa-comment-o"></i>
+    </span>
+    
+      <span class="post-meta-item-text">评论数：</span>
+    
+  
+    <a href="/blog/2019/08/01/cpp/condition-variable/#comments" itemprop="discussionUrl">
+      <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2019/08/01/cpp/condition-variable/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
           <br>
 
         </div>
@@ -330,9 +367,9 @@
           
         
         <div class="post-tags">
-            <a href="/blog/tags/cpp/" rel="tag"># cpp</a>
-          
             <a href="/blog/tags/cpp11/" rel="tag"># cpp11</a>
+          
+            <a href="/blog/tags/cpp/" rel="tag"># cpp</a>
           
         </div>
         <div class="post-nav">
@@ -364,6 +401,15 @@
 
           </div>
           
+    
+    
+  <div class="comments" id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the comments powered by Disqus.</noscript>
+    </div>
+  </div>
+  
+  
 
 
         </div>
@@ -513,6 +559,25 @@
   <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
 
 
 
@@ -595,6 +660,50 @@
 
 
 
+
+    
+<script>
+  function loadCount() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://zens-blog.disqus.com/count.js';
+    s.id = 'dsq-count-scr';
+    (d.head || d.body).appendChild(s);
+  }
+  // defer loading until the whole page loading is completed
+  window.addEventListener('load', loadCount, false);
+</script>
+<script>
+  var disqus_config = function() {
+    this.page.url = "https://blog.xazeng.com/2019/08/01/cpp/condition-variable/";
+    this.page.identifier = "2019/08/01/cpp/condition-variable/";
+    this.page.title = 'c++11 条件变量';};
+  function loadComments() {
+    var d = document, s = d.createElement('script');
+    s.src = 'https://zens-blog.disqus.com/embed.js';
+    s.setAttribute('data-timestamp', '' + +new Date());
+    (d.head || d.body).appendChild(s);
+  }
+    $(function() {
+      var offsetTop = $('#comments').offset().top - $(window).height();
+      if (offsetTop <= 0) {
+        // load directly when there's no a scrollbar
+        window.addEventListener('load', loadComments, false);
+      } else {
+        $(window).on('scroll.disqus_scroll', function() {
+          // offsetTop may changes because of manually resizing browser window or lazy loading images.
+          var offsetTop = $('#comments').offset().top - $(window).height();
+          var scrollTop = $(window).scrollTop();
+
+          // pre-load comments a bit? (margin or anything else)
+          if (offsetTop - scrollTop < 60) {
+            $(window).off('.disqus_scroll');
+            loadComments();
+          }
+        });
+      }
+    });
+  
+</script>
 
 
 </body>
