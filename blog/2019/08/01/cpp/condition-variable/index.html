@@ -28,7 +28,7 @@
     root: '/blog/',
     scheme: 'Mist',
     version: '7.3.0',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     copycode: {"enable":false,"show_result":false,"style":null},
     fancybox: false,
@@ -58,7 +58,7 @@
 </script>
 
   <meta name="description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
-<meta name="keywords" content="cpp11,cpp">
+<meta name="keywords" content="cpp,cpp11">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++11 条件变量">
 <meta property="og:url" content="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/index.html">
@@ -349,9 +349,9 @@
           
         
         <div class="post-tags">
-            <a href="/blog/tags/cpp11/" rel="tag"># cpp11</a>
-          
             <a href="/blog/tags/cpp/" rel="tag"># cpp</a>
+          
+            <a href="/blog/tags/cpp11/" rel="tag"># cpp11</a>
           
         </div>
         <div class="post-nav">
@@ -491,6 +491,30 @@
       </div>
     
   </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/xazeng" title="GitHub &rarr; https://github.com/xazeng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wszxayx@163.com" title="E-Mail &rarr; mailto:wszxayx@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
 
 
 
@@ -524,15 +548,12 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank">闽ICP备15011358号 </a>&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Zen</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
 
         
 <div class="busuanzi-count">
