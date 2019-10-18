@@ -4,56 +4,54 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-CN">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-<meta name="generator" content="Hexo 3.9.0">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.3.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.3.0">
-  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.3.0" color="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.4.1" color="#222">
 
-<link rel="stylesheet" href="/blog/css/main.css?v=7.3.0">
+<link rel="stylesheet" href="/blog/css/main.css?v=7.4.1">
 
 
 <link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-<script id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/blog/',
     scheme: 'Mist',
-    version: '7.3.0',
+    version: '7.4.1',
+    exturl: false,
     sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
     pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    search: {
-      root: '/blog/',
-      path: ''
-    },
-    tabs: true,
+    path: '',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
       copy_button: '复制',
       copy_success: '复制成功',
       copy_failure: '复制失败'
-    }
+    },
+    sidebarPadding: 40
   };
 </script>
 
@@ -65,31 +63,37 @@
 <meta property="og:site_name" content="Zen&#39;s Blog">
 <meta property="og:description" content="Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。本文主要记录一些基本用法，供参考和记忆。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-02T02:42:24.515Z">
+<meta property="og:updated_time" content="2019-10-18T09:51:10.446Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="markdown 基础">
 <meta name="twitter:description" content="Markdown是一种可以使用普通文本编辑器编写的标记语言，通过简单的标记语法，它可以使普通文本内容具有一定的格式。本文主要记录一些基本用法，供参考和记忆。">
   <link rel="canonical" href="https://blog.xazeng.com/2019/08/01/others/markdown/">
 
 
-<script id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
   <title>markdown 基础 | Zen's Blog</title>
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1# <app_id>"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-100898985-1# <app_id>');
-    }
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-100898985-1');
+      }
+    </script>
+  
 
 
 
@@ -100,7 +104,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -109,9 +112,8 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -125,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
-
-  <div class="container sidebar-position-left page-post-detail">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/blog/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zen's Blog</span>
@@ -144,87 +145,96 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
 
-
 <nav class="site-nav">
-    <ul id="menu" class="menu">
+  
+  <ul id="menu" class="menu">
+      
+      
         
         
-        
-          
-          <li class="menu-item menu-item-home">
+        <li class="menu-item menu-item-home">
       
     
 
-    <a href="/blog/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
+      
+    
+      
+      
         
         
-        
-          
-          <li class="menu-item menu-item-tags">
+        <li class="menu-item menu-item-tags">
       
     
 
-    <a href="/blog/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+    <a href="/blog/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
+      
+    
+      
+      
         
         
-        
-          
-          <li class="menu-item menu-item-categories">
+        <li class="menu-item menu-item-categories">
       
     
 
-    <a href="/blog/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+    <a href="/blog/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
+      
+    
+      
+      
         
         
-        
-          
-          <li class="menu-item menu-item-archives">
+        <li class="menu-item menu-item-archives">
       
     
 
-    <a href="/blog/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
-    </ul>
+      
+    
+  </ul>
+
     
 
 </nav>
-
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-    
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/blog/2019/08/01/others/markdown/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -237,23 +247,20 @@
       <meta itemprop="name" content="Zen's Blog">
     </span>
       <header class="post-header">
-
-        
-          <h1 class="post-title" itemprop="name headline">markdown 基础
-
-              
+        <h1 class="post-title" itemprop="name headline">
+          
+            markdown 基础
             
-          </h1>
-        
+
+          
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
@@ -269,10 +276,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-08-02 10:42:24" itemprop="dateModified" datetime="2019-08-02T10:42:24+08:00">2019-08-02</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-10-18 17:51:10" itemprop="dateModified" datetime="2019-10-18T17:51:10+08:00">2019-10-18</time>
               </span>
             
           
@@ -280,11 +285,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
               
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/blog/categories/others/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/others/" itemprop="url" rel="index">
+                    <span itemprop="name">未分类</span>
+                  </a>
+                </span>
 
                 
                 
@@ -293,15 +300,14 @@
           
 
           
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon"
-              >
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
-                 阅读次数： 
-                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
               </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
             </span>
-          <br>
+          
 
         </div>
       </header>
@@ -316,114 +322,112 @@
 <a id="more"></a>
 
 <hr>
-<h2 id="兼容-HTML"><a href="#兼容-HTML" class="headerlink" title="兼容 HTML"></a>兼容 HTML</h2><p>不需要任何标注就可以使用 HTML 标签。</p>
-<p>区块标签（比如：<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;p&gt;</code>、<code>&lt;pre&gt;</code> 等）必须在前后加上空行，且要求开始和结束标签不能用 tab 或空格来缩进。<br>区段标签（比如：<code>&lt;span&gt;</code>、<code>&lt;a&gt;</code>、<code>&lt;img&gt;</code> 等）则不受限制，可以在 Markdown 语法里任意使用。<br>值得注意的是 Markdown 语法在区块标签内是无效的，在区段标签内有效。</p>
-<p>尽量避免使用 style 标签，因为有些网站（比如 github）出于某种考虑会禁用这个标签。<br>实际上应该尽量避免直接使用 html 标签，因为使用 Markdown 的目的就在于简化格式语法，而不是让它更复杂。</p>
-<hr>
-<h2 id="特殊字符自动转换"><a href="#特殊字符自动转换" class="headerlink" title="特殊字符自动转换"></a>特殊字符自动转换</h2><p>某些特殊字符（比如：<code>&lt;</code>、<code>&amp;</code>）在 HTML 中必须以实体形式存在，这种实体形式在 Markdown 的语法中也是有效的。<br>当然 Markdown 允许直接使用这些特殊字符。</p>
+<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题</span></span><br><span class="line"><span class="section">## 二级标题</span></span><br><span class="line"><span class="section">### 三级标题</span></span><br><span class="line"><span class="section">#### 四级标题</span></span><br><span class="line"><span class="section">##### 五级标题</span></span><br><span class="line"><span class="section">###### 六级标题</span></span><br></pre></td></tr></table></figure>
+
 <hr>
 <h2 id="段落和换行"><a href="#段落和换行" class="headerlink" title="段落和换行"></a>段落和换行</h2><p>用前后至少一个空行来区分段落，段落内允许换行（两个空格加回车）。<br>普通段落不要用空格或者 tab 来首行缩进，因为空格和 tab 会被当成 Markdown 语法处理。</p>
 <hr>
-<h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><pre><code># 一级标题
-## 二级标题
-### 三级标题
-#### 四级标题
-##### 五级标题
-###### 六级标题</code></pre><hr>
-<h2 id="引言区块"><a href="#引言区块" class="headerlink" title="引言区块"></a>引言区块</h2><p>在每行前面加上 <code>&gt;</code> 就能产生一个区块引言。<br>Markdown 允许只在整个段落的第一行最前面加上 <code>&gt;</code> 。<br>引言的区块内可以使用其它 Markdown 语法，包括引言语法。</p>
-<pre><code>&gt; ## This is a header.
-&gt; 
-&gt; 1.   This is the first list item.
-&gt; 2.   This is the second list item.
-&gt; 
-&gt; Here&apos;s some example code:
-&gt; 
-&gt;     return shell_exec(&quot;echo $input | $markdown_script&quot;);</code></pre><hr>
 <h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><ul>
-<li><h4 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h4><p>  序号不影响结果的数字的顺序。</p>
-<pre><code>1. 文本1
-2. 文本2
-3. 文本3</code></pre></li>
-<li><h4 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h4><p>  星号、加号和减号都可以作为无序列表标记</p>
-<pre><code>* 文本
-* 文本
-* 文本</code></pre></li>
-</ul>
-<p>列表项目可以包含多个段落。<br>列表项目下的段落、引言、和代码区块都必须先缩排 4 个空格或者一个 tab。</p>
-<hr>
-<h2 id="代码区块"><a href="#代码区块" class="headerlink" title="代码区块"></a>代码区块</h2><p>一个空行，加上每行缩进 4 个空格或者一个 tab ，就构成一个代码区块。</p>
-<pre><code>do
-{
-    for (int i=0; i&lt;10; i++)
-    {
-        printf(&quot;%02d\n&quot;, i);
-    }
-}while (false);</code></pre><hr>
-<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><pre><code>***
-* * *
-*****
------
----------------------------------------</code></pre><hr>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul>
-<li><h4 id="行内"><a href="#行内" class="headerlink" title="行内"></a>行内</h4><pre><code>This is [an example](http://example.com/ &quot;Title&quot;) inline link. // 绝对路径
-See my [About](/about/) page for details. // 相对路径
-Example link: &lt;http://www.baidu.com&gt;.  //</code></pre></li>
-<li><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4><pre><code>This is [an example][id] reference-style link.
+<li><h3 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h3><p>  序号不影响结果的数字的顺序。</p>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1. </span>文本1</span><br><span class="line"><span class="bullet">2. </span>文本2</span><br><span class="line"><span class="bullet">3. </span>文本3</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h3><p>  星号、加号和减号都可以作为无序列表标记</p>
+  <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>文本</span><br><span class="line"><span class="bullet">* </span>文本</span><br><span class="line"><span class="bullet">* </span>文本</span><br></pre></td></tr></table></figure>
 
-// 文档任意处，建议统一放在文档最后
-[id]: http://example.com/  &quot;Optional Title Here&quot;</code></pre><p>  这里的 id 可以是数字，也可以是字母。</p>
 </li>
 </ul>
+<p>列表项目可以包含多个段落。<br>列表项目下的段落、引言等都必须先缩排 4 个空格或者一个 tab, 代码区块要 8 个空格或两个 tab。<br>列表有可能误判，这时就需要转译，比如：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">1986\. What a great season.</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="特殊字符自动转换"><a href="#特殊字符自动转换" class="headerlink" title="特殊字符自动转换"></a>特殊字符自动转换</h2><p>某些特殊字符（比如：<code>&lt;</code>、<code>&amp;</code>）在 HTML 中必须以实体形式存在，这种实体形式在 Markdown 的语法中也是有效的。<br>当然 Markdown 允许直接使用这些特殊字符。</p>
+<hr>
+<h2 id="引言区块"><a href="#引言区块" class="headerlink" title="引言区块"></a>引言区块</h2><p>在每行前面加上 <code>&gt;</code> 就能产生一个区块引言。<br>Markdown 允许只在整个段落的第一行最前面加上 <code>&gt;</code> 。<br>引言的区块内可以使用其它 Markdown 语法，包括引言语法。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; ## This is a header.</span></span><br><span class="line">&gt;</span><br><span class="line"><span class="quote">&gt; 1. This is the first list item.</span></span><br><span class="line"><span class="quote">&gt; 2. This is the second list item.</span></span><br><span class="line">&gt;</span><br><span class="line"><span class="quote">&gt; Here's some example code:</span></span><br><span class="line">&gt;</span><br><span class="line"><span class="quote">&gt;     return shell_exec("echo $input | $markdown_script");</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="代码区块"><a href="#代码区块" class="headerlink" title="代码区块"></a>代码区块</h2><p>一个空行，加上每行缩进 4 个空格或者一个 tab ，就构成一个代码区块。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">普通段落</span><br><span class="line"></span><br><span class="line"><span class="code">    do</span></span><br><span class="line"><span class="code">    &#123;</span></span><br><span class="line"><span class="code">        for (int i=0; i&lt;10; i++)</span></span><br><span class="line"><span class="code">        &#123;</span></span><br><span class="line"><span class="code">            printf("%02d\n", i);</span></span><br><span class="line"><span class="code">        &#125;</span></span><br><span class="line"><span class="code">    &#125;while (false);</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">***</span></span><br><span class="line"><span class="bullet">* </span><span class="bullet">* *</span></span><br><span class="line"><span class="strong">*****</span></span><br><span class="line">-----</span><br><span class="line">---------------------------------------</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><ul>
+<li><h3 id="行内"><a href="#行内" class="headerlink" title="行内"></a>行内</h3></li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">This is [<span class="string">an example</span>](<span class="link">http://example.com/ "Title"</span>) inline link. // 绝对路径</span><br><span class="line">See my [<span class="string">About</span>](<span class="link">/about/</span>) page for details. // 相对路径</span><br><span class="line">Example link: &lt;http://www.baidu.com&gt;.  //</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><h4 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h4></li>
+</ul>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">This is [<span class="string">an example</span>][<span class="symbol">id</span>] reference-style link.</span><br><span class="line">// 文档任意处，建议统一放在文档最后</span><br><span class="line">[<span class="symbol">id</span>]: <span class="link">http://example.com/  "Optional Title Here"</span></span><br><span class="line"></span><br><span class="line">这里的 id 可以是数字，也可以是字母。</span><br></pre></td></tr></table></figure>
+
 <hr>
 <h2 id="强调"><a href="#强调" class="headerlink" title="强调"></a>强调</h2><p>使用一个 <code>*</code> 或者 <code>_</code> 包围的文本会被转成用 <code>&lt;em&gt;</code> 标签包围。<br>使用两个 <code>*</code> 或者 <code>_</code> 包围的文本会被转成用 <code>&lt;strong&gt;</code> 标签包围。</p>
-<pre><code>*em*
-**strong**</code></pre><hr>
-<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><p>行内标记程序代码，可以用反引号 <code>`</code> 包围。</p>
-<pre><code>Use the `printf()` function.
-``There is a literal backtick (`) here.`` // 代码内有反引号
-A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><pre><code>![Alt text](/path/to/img.jpg &quot;optional title&quot;)
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="emphasis">*em*</span></span><br><span class="line"><span class="strong">**strong**</span></span><br></pre></td></tr></table></figure>
 
-![Alt text][id]
-[id]: url/to/image  &quot;Optional title attribute&quot;</code></pre><hr>
-<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="noopener">Markdown: Syntax</a><br><a href="http://markdown.tw/" target="_blank" rel="noopener">Markdown 語法說明</a><br><a href="http://www.ituring.com.cn/article/504" target="_blank" rel="noopener">Markdown 语法说明</a><br><a href="http://www.zhihu.com/question/20409634" target="_blank" rel="noopener">知乎：怎样引导新手使用 Markdown</a>  </p>
+<hr>
+<h2 id="程序代码"><a href="#程序代码" class="headerlink" title="程序代码"></a>程序代码</h2><p>行内标记程序代码，可以用反引号 <code>`</code> 包围。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Use the <span class="code">`printf()`</span> function.</span><br><span class="line"><span class="code">``There is a literal backtick (`</span>) here.`` // 代码内有反引号</span><br><span class="line">A single backtick in a code span: <span class="code">`` `</span> ``. // 单个反引号</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">Alt text</span>](<span class="link">/path/to/img.jpg "optional title"</span>)</span><br><span class="line"></span><br><span class="line">![<span class="string">Alt text</span>][<span class="symbol">id</span>]</span><br><span class="line">[<span class="symbol">id</span>]: <span class="link">url/to/image  "Optional title attribute"</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="兼容-HTML"><a href="#兼容-HTML" class="headerlink" title="兼容 HTML"></a>兼容 HTML</h2><p>不需要任何标注就可以使用 HTML 标签。</p>
+<p>区块标签（比如：<code>&lt;div&gt;</code>、<code>&lt;table&gt;</code>、<code>&lt;p&gt;</code>、<code>&lt;pre&gt;</code> 等）必须在前后加上空行，且要求开始和结束标签不能用 tab 或空格来缩进。<br>行内标签（比如：<code>&lt;span&gt;</code>、<code>&lt;a&gt;</code>、<code>&lt;img&gt;</code> 等）则不受限制，可以在 Markdown 语法里任意使用。<br>值得注意的是 Markdown 语法在区块标签内是无效的，而在行内标签内有效。</p>
+<p>尽量避免使用 style 标签，因为有些网站（比如 github）出于某种考虑会禁用这个标签。<br>实际上应该尽量避免直接使用 html 标签，因为使用 Markdown 的目的就在于简化格式语法，而不是让它更复杂。</p>
+<hr>
+<h2 id="相关链接"><a href="#相关链接" class="headerlink" title="相关链接"></a>相关链接</h2><p><a href="http://daringfireball.net/projects/markdown/syntax" target="_blank" rel="noopener">Markdown: Syntax</a><br><a href="https://www.markdown.cn/" target="_blank" rel="noopener">Markdown 教程</a><br><a href="http://www.ituring.com.cn/article/504" target="_blank" rel="noopener">Markdown 语法说明</a><br><a href="http://www.zhihu.com/question/20409634" target="_blank" rel="noopener">知乎：怎样引导新手使用 Markdown</a>  </p>
 
     </div>
 
     
     
     
-
-    <footer class="post-footer">
-          
         
-        <div class="post-tags">
-            <a href="/blog/tags/markdown/" rel="tag"># markdown</a>
+      
+
+      <footer class="post-footer">
           
-        </div>
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-              <a href="/blog/2019/08/01/mysql/reconnect/" rel="next" title="mysql 重连处理">
-                <i class="fa fa-chevron-left"></i> mysql 重连处理
-              </a>
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/markdown/" rel="tag"># markdown</a>
             
           </div>
+        
 
-          <span class="post-nav-divider"></span>
+        
 
-          <div class="post-nav-prev post-nav-item">
-              <a href="/blog/2019/08/01/unity/mouse_event/" rel="prev" title="unity 鼠标事件">
-                unity 鼠标事件 <i class="fa fa-chevron-right"></i>
-              </a>
-            
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2019/08/01/mysql/reconnect/" rel="next" title="mysql 重连处理">
+                  <i class="fa fa-chevron-left"></i> mysql 重连处理
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2019/08/01/others/visual-studio/" rel="prev" title="visual studio 技巧">
+                  visual studio 技巧 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
           </div>
-        </div>
-    </footer>
-  </div>
-  
-  
-  
+        
+      </footer>
+    
   </article>
+  
+  
+  
 
   </div>
 
@@ -434,43 +438,51 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
     <div class="comments" id="gitalk-container"></div>
   
 
-
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#标题"><span class="nav-number">1.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段落和换行"><span class="nav-number">2.</span> <span class="nav-text">段落和换行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">3.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#有序列表"><span class="nav-number">3.1.</span> <span class="nav-text">有序列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#无序列表"><span class="nav-number">3.2.</span> <span class="nav-text">无序列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊字符自动转换"><span class="nav-number">4.</span> <span class="nav-text">特殊字符自动转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引言区块"><span class="nav-number">5.</span> <span class="nav-text">引言区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码区块"><span class="nav-number">6.</span> <span class="nav-text">代码区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分隔线"><span class="nav-number">7.</span> <span class="nav-text">分隔线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接"><span class="nav-number">8.</span> <span class="nav-text">链接</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#行内"><span class="nav-number">8.1.</span> <span class="nav-text">行内</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">8.1.1.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强调"><span class="nav-number">9.</span> <span class="nav-text">强调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序代码"><span class="nav-number">10.</span> <span class="nav-text">程序代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">11.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#兼容-HTML"><span class="nav-number">12.</span> <span class="nav-text">兼容 HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">13.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Zen</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
-  <nav class="site-state motion-element">
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
       <div class="site-state-item site-state-posts">
         
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">11</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -483,17 +495,7 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
             <a href="/blog/categories/">
           
         
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -506,38 +508,13 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
             <a href="/blog/tags/">
           
         
-        
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">18</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
   </nav>
+</div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
       
@@ -565,25 +542,7 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
 
 
 
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#兼容-HTML"><span class="nav-number">1.</span> <span class="nav-text">兼容 HTML</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特殊字符自动转换"><span class="nav-number">2.</span> <span class="nav-text">特殊字符自动转换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#段落和换行"><span class="nav-number">3.</span> <span class="nav-text">段落和换行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#标题"><span class="nav-number">4.</span> <span class="nav-text">标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引言区块"><span class="nav-number">5.</span> <span class="nav-text">引言区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#列表"><span class="nav-number">6.</span> <span class="nav-text">列表</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#有序列表"><span class="nav-number">6.0.1.</span> <span class="nav-text">有序列表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#无序列表"><span class="nav-number">6.0.2.</span> <span class="nav-text">无序列表</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码区块"><span class="nav-number">7.</span> <span class="nav-text">代码区块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分隔线"><span class="nav-number">8.</span> <span class="nav-text">分隔线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#链接"><span class="nav-number">9.</span> <span class="nav-text">链接</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#行内"><span class="nav-number">9.0.1.</span> <span class="nav-text">行内</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考"><span class="nav-number">9.0.2.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#强调"><span class="nav-number">10.</span> <span class="nav-text">强调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#程序代码"><span class="nav-number">11.</span> <span class="nav-text">程序代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图片"><span class="nav-number">12.</span> <span class="nav-text">图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关链接"><span class="nav-number">13.</span> <span class="nav-text">相关链接</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -593,10 +552,14 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">  <a href="http://www.beian.miit.gov.cn" rel="noopener" target="_blank">闽ICP备15011358号 </a>&copy; <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">Zen</span>
@@ -605,23 +568,31 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
         
 <div class="busuanzi-count">
   <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-user"></i>
-    </span>
-    <span class="site-uv" title="总访客量">
-      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
     </span>
   
     <span class="post-meta-divider">|</span>
   
-    <span class="post-meta-item-icon">
-      <i class="fa fa-eye"></i>
-    </span>
-    <span class="site-pv" title="总访问量">
-      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
     </span>
   
 </div>
+
+
+
+
 
 
 
@@ -633,34 +604,40 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-      </div>
-
-    
-
   </div>
 
   
-  <script src="/blog/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/blog/lib/anime.min.js?v=3.1.0"></script>
   <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/blog/js/utils.js?v=7.4.1"></script><script src="/blog/js/motion.js?v=7.4.1"></script>
+<script src="/blog/js/schemes/muse.js?v=7.4.1"></script>
 
-  <script src="/blog/js/utils.js?v=7.3.0"></script>
-  <script src="/blog/js/motion.js?v=7.3.0"></script>
-
-  
-  <script src="/blog/js/schemes/muse.js?v=7.3.0"></script>
+<script src="/blog/js/next-boot.js?v=7.4.1"></script>
 
 
 
   
-  <script src="/blog/js/scrollspy.js?v=7.3.0"></script>
-<script src="/blog/js/post-details.js?v=7.3.0"></script>
 
 
 
-  <script src="/blog/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -668,63 +645,24 @@ A single backtick in a code span: `` ` ``. // 单个反引号</code></pre><hr>
 
   
 
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
-<script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
 
 <script>
-  var gitalk = new Gitalk({
-    clientID: 'fe7a3d11c21f79f6b093',
-    clientSecret: '4864c1982f4102ce367bd17735d807832809a76c',
-    repo: 'blog-md',
-    owner: 'xazeng',
-    admin: ['xazeng'],
-    id: md5(location.pathname),
-      language: 'zh-CN',
-    
-    distractionFreeMode: 'true'
-  });
-  gitalk.render('gitalk-container');
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'fe7a3d11c21f79f6b093',
+      clientSecret: '4864c1982f4102ce367bd17735d807832809a76c',
+      repo: 'blog-md',
+      owner: 'xazeng',
+      admin: ['xazeng'],
+      id: 'b5a5b9da7a3e32d1647b537ec9f3ada8',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
 </script>
-
 
 </body>
 </html>
