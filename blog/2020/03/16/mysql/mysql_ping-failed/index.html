@@ -55,14 +55,19 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Zen&#39;s Blog">
-<meta property="og:url" content="https://blog.xazeng.com/tags/software/index.html">
+  <meta name="description" content="台湾同事在接入【登入登出日志】后发现 mysql 服务器的连接数一直往上升，进一步分析确定： 每调用一次【登入登出日志】的存储过程，mysql 服务器的连接数就多一个。">
+<meta name="keywords" content="mysql,database">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mysql_ping 失敗">
+<meta property="og:url" content="https://blog.xazeng.com/2020/03/16/mysql/mysql_ping-failed/index.html">
 <meta property="og:site_name" content="Zen&#39;s Blog">
+<meta property="og:description" content="台湾同事在接入【登入登出日志】后发现 mysql 服务器的连接数一直往上升，进一步分析确定： 每调用一次【登入登出日志】的存储过程，mysql 服务器的连接数就多一个。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-16T07:30:12.982Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zen&#39;s Blog">
-  <link rel="canonical" href="https://blog.xazeng.com/tags/software/">
+<meta name="twitter:title" content="mysql_ping 失敗">
+<meta name="twitter:description" content="台湾同事在接入【登入登出日志】后发现 mysql 服务器的连接数一直往上升，进一步分析确定： 每调用一次【登入登出日志】的存储过程，mysql 服务器的连接数就多一个。">
+  <link rel="canonical" href="https://blog.xazeng.com/2020/03/16/mysql/mysql_ping-failed/">
 
 
 <script id="page-configurations">
@@ -70,13 +75,13 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: false,
+    isPost: true,
     isPage: false,
     isArchive: false
   };
 </script>
 
-  <title>标签: software | Zen's Blog</title>
+  <title>mysql_ping 失敗 | Zen's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1"></script>
     <script>
@@ -208,21 +213,6 @@
 
     
 
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-    
-    
-  
-  
-
 </nav>
 </div>
     </header>
@@ -240,94 +230,154 @@
           <div class="content">
             
 
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h1 class="collection-header">software
-          <small>标签</small>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/blog/2020/03/16/mysql/mysql_ping-failed/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            mysql_ping 失敗
+            
+
+          
         </h1>
-      </div>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-03-16 15:19:05 / 修改时间：15:30:12" itemprop="dateCreated datePublished" datetime="2020-03-16T15:19:05+08:00">2020-03-16</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/mysql/" itemprop="url" rel="index">
+                    <span itemprop="name">mysql</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+        <p>台湾同事在接入【登入登出日志】后发现 mysql 服务器的连接数一直往上升，进一步分析确定：</p>
+<p><em>每调用一次【登入登出日志】的存储过程，mysql 服务器的连接数就多一个。</em></p>
+<a id="more"></a>
 
-  
-  
+<p>查看台湾服务器相关代码后发现，他们并没有处理<em>多结果返回</em>的情况，而写入日志的存储过程恰好返回了多个结果。</p>
+<p>mysql 的文档对这个情况有非常具体的描述：</p>
+<blockquote>
+<p>Executing a multiple-statement string can produce multiple result sets or row-count indicators. Processing these results involves a different approach than for the single-statement case: After handling the result from the first statement, it is necessary to check whether more results exist and process them in turn if so. To support multiple-result processing, the C API includes the mysql_more_results() and mysql_next_result() functions. These functions are used at the end of a loop that iterates as long as more results are available. <u>Failure to process the result this way may result in a dropped connection to the server.</u><br>详见：<a href="https://docs.oracle.com/cd/E17952_01/mysql-5.6-en/c-api-multiple-queries.html" target="_blank" rel="noopener">https://docs.oracle.com/cd/E17952_01/mysql-5.6-en/c-api-multiple-queries.html</a></p>
+</blockquote>
+<p>实际上 mysql 建议所有可能调用存储过程的连接一定要记得处理多结果的情况。</p>
+<blockquote>
+<p>If your program uses CALL statements to execute stored procedures, the CLIENT_MULTI_RESULTS flag <u>must be</u> enabled. This is because each CALL returns a result to indicate the call status, in addition to any result sets that might be returned by statements executed within the procedure. Because CALL can return multiple results, process them using a loop that calls mysql_next_result() to determine whether there are more results.<br>详见：<a href="https://docs.oracle.com/cd/E17952_01/mysql-5.6-en/mysql-real-connect.html" target="_blank" rel="noopener">https://docs.oracle.com/cd/E17952_01/mysql-5.6-en/mysql-real-connect.html</a></p>
+</blockquote>
 
-  
+    </div>
+
     
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-10-10T15:59:55+08:00"
-              content="2019-10-10">
-          10-10
-        </time>
-      </div>
-
-      <h2 class="post-title">
+    
+    
         
-          <a class="post-title-link" href="/blog/2019/10/10/others/cmake/" itemprop="url">
-            <span itemprop="name">cmake 技巧</span>
-          </a>
-        
-      </h2>
+      
 
-    </header>
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/mysql/" rel="tag"># mysql</a>
+            
+              <a href="/blog/tags/database/" rel="tag"># database</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2020/03/16/me/20200316/" rel="next" title="With Honey">
+                  <i class="fa fa-chevron-left"></i> With Honey
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
   </article>
-
-
-
+  
   
   
 
-  
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-08-01T15:59:55+08:00"
-              content="2019-08-01">
-          08-01
-        </time>
-      </div>
-
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/blog/2019/08/01/others/visual-studio/" itemprop="url">
-            <span itemprop="name">visual studio 技巧</span>
-          </a>
-        
-      </h2>
-
-    </header>
-  </article>
-
-
-
-    </div>
   </div>
-  
-  
-  
-
-  
-
 
 
           </div>
           
+    
+    <div class="comments" id="gitalk-container"></div>
+  
 
         </div>
           
@@ -340,6 +390,11 @@
 
   <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -529,6 +584,24 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'fe7a3d11c21f79f6b093',
+      clientSecret: '4864c1982f4102ce367bd17735d807832809a76c',
+      repo: 'blog-md',
+      owner: 'xazeng',
+      admin: ['xazeng'],
+      id: '6ecf16c5edbf5aef281a87ccf5764d65',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
 
 </body>
 </html>
