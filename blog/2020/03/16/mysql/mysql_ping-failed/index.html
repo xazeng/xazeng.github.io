@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Zen&#39;s Blog">
 <meta property="og:description" content="台湾同事在接入【登入登出日志】后发现 mysql 服务器的连接数一直往上升，进一步分析确定： 每调用一次【登入登出日志】的存储过程，mysql 服务器的连接数就多一个。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-16T07:30:12.982Z">
+<meta property="og:updated_time" content="2020-09-01T01:57:06.127Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mysql_ping 失敗">
 <meta name="twitter:description" content="台湾同事在接入【登入登出日志】后发现 mysql 服务器的连接数一直往上升，进一步分析确定： 每调用一次【登入登出日志】的存储过程，mysql 服务器的连接数就多一个。">
@@ -266,11 +266,19 @@
                 
               
 
-              <time title="创建时间：2020-03-16 15:19:05 / 修改时间：15:30:12" itemprop="dateCreated datePublished" datetime="2020-03-16T15:19:05+08:00">2020-03-16</time>
+              <time title="创建时间：2020-03-16 15:19:05" itemprop="dateCreated datePublished" datetime="2020-03-16T15:19:05+08:00">2020-03-16</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-01 09:57:06" itemprop="dateModified" datetime="2020-09-01T09:57:06+08:00">2020-09-01</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -323,6 +331,7 @@
 <blockquote>
 <p>If your program uses CALL statements to execute stored procedures, the CLIENT_MULTI_RESULTS flag <u>must be</u> enabled. This is because each CALL returns a result to indicate the call status, in addition to any result sets that might be returned by statements executed within the procedure. Because CALL can return multiple results, process them using a loop that calls mysql_next_result() to determine whether there are more results.<br>详见：<a href="https://docs.oracle.com/cd/E17952_01/mysql-5.6-en/mysql-real-connect.html" target="_blank" rel="noopener">https://docs.oracle.com/cd/E17952_01/mysql-5.6-en/mysql-real-connect.html</a></p>
 </blockquote>
+<p>2020.8.1 记：vt 服务器中的 center server 出现公会数据在周六0点后无法继续写入的问题。经查发现是其中一个业务使用 ostringstream.clean 导致多条语句出现在一次查询中，以致后续查询都没有生效也没有报错。虽然内网没有重现，但更新这个bug后外网也不再出现类似故障，应该可以基本认定是没有处理 <em>多结果返回</em> 导致。</p>
 
     </div>
 
@@ -425,7 +434,7 @@
         
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -438,7 +447,7 @@
             <a href="/blog/categories/">
           
         
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">9</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -451,7 +460,7 @@
             <a href="/blog/tags/">
           
         
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>

@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/blog/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/blog/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/blog/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/blog/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/blog/css/main.css?v=7.4.1">
+
+
+<link rel="stylesheet" href="/blog/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/blog/',
+    scheme: 'Mist',
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"hide","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="Lua learning">
+<meta name="keywords" content="lua,learn">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Lua">
+<meta property="og:url" content="https://blog.xazeng.com/2020/08/15/lua/lua/index.html">
+<meta property="og:site_name" content="Zen&#39;s Blog">
+<meta property="og:description" content="Lua learning">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-17T07:26:08.329Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Lua">
+<meta name="twitter:description" content="Lua learning">
+  <link rel="canonical" href="https://blog.xazeng.com/2020/08/15/lua/lua/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>Lua | Zen's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-100898985-1');
+      }
+    </script>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/blog/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zen's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+        
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/blog/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/blog/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-categories">
+      
+    
+
+    <a href="/blog/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+      
+    
+      
+      
+        
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/blog/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+      
+    
+  </ul>
+
+    
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/blog/2020/08/15/lua/lua/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Zen">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            Lua
+            
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2020-08-15 15:58:44" itemprop="dateCreated datePublished" datetime="2020-08-15T15:58:44+08:00">2020-08-15</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-17 15:26:08" itemprop="dateModified" datetime="2020-08-17T15:26:08+08:00">2020-08-17</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/lua/" itemprop="url" rel="index">
+                    <span itemprop="name">lua</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>Lua learning</p>
+<a id="more"></a>
+
+<h2 id="Values-and-Types"><a href="#Values-and-Types" class="headerlink" title="Values and Types"></a>Values and Types</h2><p>Lua is a <strong>dynamically typed</strong> language. This means that variables do not have types; only values do. There are no type definitions in the language. All values carry their own type.</p>
+<p>All values in Lua are <strong>first-class</strong> values. This means that all values can be stored in variables, passed as arguments to other functions, and returned as results.</p>
+<p>There are eight basic types in Lua: nil, boolean, number, string, function, userdata, thread, and table.</p>
+<ol>
+<li><p>nil<br> The type <em>nil</em> has one single value, <strong>nil</strong>, whose main property is to be different from any other value. It usually represents the absence of a useful value.  </p>
+</li>
+<li><p>boolean<br> The type <em>boolean</em> has two values, <strong>false</strong> and <strong>true</strong>. <strong>Both nil and false make a condition false; any other value makes it true.</strong></p>
+</li>
+<li><p>number<br> The type <em>number</em> uses two internal representations, or two subtypes, one called <strong>integer</strong> and the other called <strong>float</strong>.</p>
+</li>
+<li><p>string<br> The type <em>string</em> represents <strong>immutable</strong> sequences of bytes. Lua is 8-bit clean: strings can contain any 8-bit value, including embedded zeros (‘\0’). Lua is also <strong>encoding-agnostic</strong>.</p>
+</li>
+<li><p>function<br> Lua can call (and manipulate) functions written in Lua and functions written in C . Both are represented by the type function.</p>
+</li>
+<li><p>userdata<br> A <em>userdata</em> value represents a block of raw memory. There are two kinds of userdata: <strong>full userdata</strong>, which is an object with a block of memory managed by Lua, and <strong>light userdata</strong>, which is simply a C pointer value.</p>
+</li>
+<li><p>thread<br> The type <em>thread</em> represents independent threads of execution and it is used to implement <strong>coroutines</strong>. Lua threads are <strong>not</strong> related to operating-system threads.</p>
+</li>
+<li><p>table<br> The type <em>table</em> implements associative arrays, that is, arrays that can have as indices not only numbers, but any Lua value except nil and NaN.</p>
+</li>
+</ol>
+<p>Tables, functions, threads, and (full) userdata values are objects: variables do not actually contain these values, only references to them.</p>
+<h2 id="Lexical-Conventions"><a href="#Lexical-Conventions" class="headerlink" title="Lexical Conventions"></a>Lexical Conventions</h2><p>Lua is a free-form language. It <strong>ignores</strong> spaces (including new lines) and comments between lexical elements (tokens), except as delimiters between names and keywords.</p>
+<p>Lua is a <strong>case-sensitive</strong> language.</p>
+<h3 id="Literal-String"><a href="#Literal-String" class="headerlink" title="Literal String"></a>Literal String</h3><pre><code>a = &apos;alo\n123&quot;&apos;
+a = &quot;alo\n123\&quot;&quot;               -- \xXX \ddd \u{XXX}
+a = [[                         -- this newline is not included in the string
+    alo
+    \n                         -- do not interpret any escape sequences
+]]</code></pre><h3 id="Numeric-Constant"><a href="#Numeric-Constant" class="headerlink" title="Numeric Constant"></a>Numeric Constant</h3><pre><code>3   345   0xff   0xBEBADA
+3.0     3.1416     314.16e-2     0.31416E1     34e1
+0x0.1E  0xA23p-4   0X1.921FB54442D18P+1</code></pre><h3 id="Comment"><a href="#Comment" class="headerlink" title="Comment"></a>Comment</h3><pre><code>-- short comment
+--[[
+    long comment
+]]</code></pre><h2 id="Variables"><a href="#Variables" class="headerlink" title="Variables"></a>Variables</h2><p>Variables are places that store values. There are three kinds of variables in Lua: <em>global variables</em>, <em>local variables</em>, and <em>table fields</em>.</p>
+<p>Any variable name is assumed to be global unless explicitly declared as a local.</p>
+<pre><code>a = 1           -- global variable
+local a = 1     -- local variable</code></pre><p>Before the first assignment to a variable, its value is <strong>nil</strong>.</p>
+<p>The syntax <code>var.Name</code> is just syntactic sugar for <code>var[&quot;Name&quot;]</code>.</p>
+<h2 id="Statements"><a href="#Statements" class="headerlink" title="Statements"></a>Statements</h2><h3 id="Blocks"><a href="#Blocks" class="headerlink" title="Blocks"></a>Blocks</h3><p>A block is a list of statements, which are executed sequentially.</p>
+<p>Lua has <em>empty statements</em> that allow you to separate statements with semicolons, start a block with a semicolon or write two semicolons in sequence.</p>
+<pre><code>a = b + c
+(print or io.write)(&quot;done&quot;)</code></pre><p>Since Lua ignores spaces (including new lines), it equals to:</p>
+<pre><code>a = b + c(print or io.write)(&apos;done&apos;)</code></pre><p>To avoid this ambiguity, it is a good practice to always precede with a semicolon statements that start with a parenthesis:</p>
+<pre><code>;(print or io.write)(&apos;done&apos;)</code></pre><p>A block can be explicitly delimited to produce a single statement:</p>
+<pre><code>do block end</code></pre><p>Explicit blocks are useful to control the scope of variable declarations. Explicit blocks are also sometimes used to add a <strong>return</strong> statement in the middle of another block.</p>
+<h3 id="Chunks"><a href="#Chunks" class="headerlink" title="Chunks"></a>Chunks</h3><p>Lua handles a chunk as the body of an anonymous function with a variable number of arguments.</p>
+<p>A chunk can be stored in a file or in a string inside the host program. To execute a chunk, Lua first loads it, precompiling the chunk’s code into instructions for a virtual machine, and then Lua executes the compiled code with an interpreter for the virtual machine.</p>
+<p>Chunks can also be precompiled into binary form; see program <code>luac</code> and function <code>string.dump</code> for details. Programs in source and compiled forms are interchangeable; Lua automatically detects the file type and acts accordingly (see <code>load</code>).</p>
+<h3 id="Assignment"><a href="#Assignment" class="headerlink" title="Assignment"></a>Assignment</h3><p>Lua allows multiple assignments. Before the assignment, the list of values is adjusted to the length of the list of variables.  </p>
+<ul>
+<li>If there are more values than needed, the excess values are thrown away.  </li>
+<li>If there are fewer values than needed, the list is extended with as many nil’s as needed.  </li>
+<li>If the list of expressions ends with a function call, then all values returned by that call enter the list of values, before the adjustment (except when the call is enclosed in parentheses).</li>
+</ul>
+<!-- -->
+
+<pre><code>i = 3
+i, a[i] = i+1, 20   -- The assignment statement first evaluates all its expressions
+                    --   and only then the assignments are performed.
+x, y, z = y, z, x   -- Exchanges values.</code></pre><h3 id="Control-Structures"><a href="#Control-Structures" class="headerlink" title="Control Structures"></a>Control Structures</h3><ul>
+<li><p><strong>while</strong> <em>exp</em> <strong>do</strong> <em>block</em> <strong>end</strong></p>
+</li>
+<li><p><strong>repeat</strong> <em>block</em> <strong>until</strong> <em>exp</em><br>The condition can refer to local variables declared inside the loop block.</p>
+</li>
+<li><p><strong>if</strong> <em>exp</em> <strong>then</strong> <em>block</em> <strong>elseif</strong> <em>exp</em> <strong>then</strong> <em>block</em> <strong>else</strong> <em>block</em> <strong>end</strong></p>
+</li>
+<li><p><strong>return</strong><br>The return statement can only be written as the last statement of a block.<br>If it is really necessary to return in the middle of a block, then an explicit inner block can be used, as in the idiom <strong>do return end</strong>.</p>
+</li>
+<li><p><strong>break</strong></p>
+</li>
+<li><p><strong><del>continue</del></strong></p>
+</li>
+<li><p><strong>goto</strong></p>
+<pre><code>for i=1,10 do
+    if i% 2 == 0 then goto continue end
+    print(i)
+    ::continue:: -- same scope
+end</code></pre></li>
+<li><p><strong>for</strong> <em>v = e1, e2, e3</em> <strong>do</strong> <em>block</em> <strong>end</strong><br>The <strong>numerical for</strong> is equivalent to the code:</p>
+<pre><code>do
+    local var, limit, step = tonumber(e1), tonumber(e2), tonumber(e3)
+    if not (var and limit and step) then error() end
+    var = var - step
+    while true do
+        var = var + step
+        if (step &gt;= 0 and var &gt; limit) or (step &lt; 0 and var &lt; limit) then
+            break
+        end
+        local v = var
+        block
+    end
+end</code></pre><ul>
+<li>All three control expressions are evaluated only once, before the loop starts. They must all result in numbers.</li>
+<li><code>var</code>, <code>limit</code>, and <code>step</code> are invisible variables. </li>
+<li>If the third expression (the step) is absent, then a step of 1 is used.</li>
+<li><strong>The loop variable v is local to the loop body.</strong></li>
+</ul>
+</li>
+<li><p><strong>for</strong> <em>var_1, ···, var_n</em> <strong>in</strong> <em>explist</em> <strong>do</strong> <em>block</em> <strong>end</strong><br>The <strong>generic for</strong> is equivalent to the code:</p>
+<pre><code>do
+     local f, s, var = explist
+     while true do
+         local var_1, ···, var_n = f(s, var)
+         if var_1 == nil then break end
+         var = var_1
+         block
+     end
+end</code></pre><ul>
+<li><code>explist</code> is evaluated only once. Its results are an iterator function, a state, and an initial value for the first iterator variable.</li>
+<li><code>f</code>, <code>s</code>, and <code>var</code> are invisible variables.</li>
+<li>he loop variables <code>var_i</code> are local to the loop</li>
+</ul>
+</li>
+</ul>
+<h3 id="Expressions"><a href="#Expressions" class="headerlink" title="Expressions"></a>Expressions</h3><ul>
+<li><p>Arithmetic Operators</p>
+<ul>
+<li><strong>+</strong>               : addition</li>
+<li><strong>-</strong>               : substraction</li>
+<li><strong>*</strong>              : multiplication</li>
+<li><strong>/</strong>               : float division</li>
+<li><strong>//</strong>              : floor division</li>
+<li><strong>%</strong>               : modulo</li>
+<li><strong>^</strong>               : exponentiation</li>
+<li><strong>-</strong>               : unary minus</li>
+</ul>
+<p>If both operands are integers, the operation is performed over integers and the result is an integer.<br>Otherwise, if both operands are numbers or strings that can be converted to numbers, then they are converted to floats.<br>Exponentiation and float division (/) always convert their operands to floats and the result is always a float.  </p>
+</li>
+<li><p>Bitwise Operators</p>
+<ul>
+<li><strong>&amp;</strong>               : bitwise AND</li>
+<li><strong>|</strong>               : bitwise OR</li>
+<li><strong>~</strong>               : bitwise exclusive OR</li>
+<li><strong>&gt;&gt;</strong>              : right shift</li>
+<li><strong>&lt;&lt;</strong>              : left shift</li>
+<li><strong>~</strong>               : unary bitwise NOT</li>
+</ul>
+<p>All bitwise operations convert its operands to integers.<br>Both right and left shifts fill the vacant bits with zeros.</p>
+</li>
+<li><p>Relational Operators</p>
+<ul>
+<li><strong>==</strong>              : equality</li>
+<li><strong>~=</strong>              : inequality</li>
+<li><strong>&lt;</strong>               : less than</li>
+<li><strong>&gt;</strong>               : greater than</li>
+<li><strong>&lt;=</strong>              : less or equal</li>
+<li><strong>&gt;=</strong>              : greater or equal</li>
+</ul>
+<p>Equality (==) first compares the type of its operands. If the types are different, then the result is false.<br>Tables, userdata, and threads are compared by reference.<br>Equality comparisons do not convert strings to numbers or vice versa. Thus, “0”==0 evaluates to false, and t[0] and t[“0”] denote different entries in a table.</p>
+</li>
+<li><p>Logical Operators</p>
+<ul>
+<li><strong>and</strong></li>
+<li><strong>or</strong></li>
+<li><strong>not</strong></li>
+</ul>
+<p>The conjunction operator <strong>and</strong> returns its first argument if this value is false or nil; otherwise, <strong>and</strong> returns its second argument.<br>The disjunction operator <strong>or</strong> returns its first argument if this value is different from nil and false; otherwise, <strong>or</strong> returns its second argument.<br>Both <strong>and</strong> and <strong>or</strong> use short-circuit evaluation; that is, the second operand is evaluated only if necessary.</p>
+</li>
+<li><p>Concatenation</p>
+<ul>
+<li><strong>..</strong>              : string concatenation operator</li>
+</ul>
+<p>Operands are converted to strings.</p>
+</li>
+<li><p>The Length Operator</p>
+<ul>
+<li><strong>#</strong>               : length operator</li>
+</ul>
+<p>The length of a string is its number of bytes.<br>The length operator applied on a table returns a border in that table.  </p>
+<pre><code>#{1, 2, 3, 4, 5}          -- 5
+#{1, 2, 3, nil, 5}        -- 3
+#{nil, 2, 3, 4, 5}        -- 0</code></pre></li>
+<li><p>Table Constructors</p>
+<pre><code>a = {1, &quot;2&quot;, 3, }
+a = {[1] = 1, x = 2, [&quot;y&quot;] = 3}
+a = { [f(1)] = g; &quot;x&quot;, &quot;y&quot;; x = 1, f(x), [30] = 23; 45 }</code></pre><p>The order of the assignments in a constructor is undefined.<br>If the last field in the list has the form exp and the expression is a function call or a vararg expression, then all values returned by this expression enter the list consecutively.</p>
+</li>
+<li><p>Function Calls</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/blog/tags/lua/" rel="tag"># lua</a>
+            
+              <a href="/blog/tags/learn/" rel="tag"># learn</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/blog/2020/03/18/linux/devtoolset/" rel="next" title="高版本 gcc 解决方案：devtoolset">
+                  <i class="fa fa-chevron-left"></i> 高版本 gcc 解决方案：devtoolset
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/blog/2020/08/19/others/program-diff/" rel="prev" title="编程语言的差别速记">
+                  编程语言的差别速记 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+    
+    <div class="comments" id="gitalk-container"></div>
+  
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Values-and-Types"><span class="nav-number">1.</span> <span class="nav-text">Values and Types</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Lexical-Conventions"><span class="nav-number">2.</span> <span class="nav-text">Lexical Conventions</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Literal-String"><span class="nav-number">2.1.</span> <span class="nav-text">Literal String</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Numeric-Constant"><span class="nav-number">2.2.</span> <span class="nav-text">Numeric Constant</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Comment"><span class="nav-number">2.3.</span> <span class="nav-text">Comment</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variables"><span class="nav-number">3.</span> <span class="nav-text">Variables</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Statements"><span class="nav-number">4.</span> <span class="nav-text">Statements</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Blocks"><span class="nav-number">4.1.</span> <span class="nav-text">Blocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chunks"><span class="nav-number">4.2.</span> <span class="nav-text">Chunks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Assignment"><span class="nav-number">4.3.</span> <span class="nav-text">Assignment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Control-Structures"><span class="nav-number">4.4.</span> <span class="nav-text">Control Structures</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Expressions"><span class="nav-number">4.5.</span> <span class="nav-text">Expressions</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Zen</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/blog/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/blog/categories/">
+          
+        
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/blog/tags/">
+          
+        
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/xazeng" title="GitHub &rarr; https://github.com/xazeng" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:wszxayx@163.com" title="E-Mail &rarr; mailto:wszxayx@163.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Zen</span>
+</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/blog/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/blog/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/blog/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/blog/js/utils.js?v=7.4.1"></script><script src="/blog/js/motion.js?v=7.4.1"></script>
+<script src="/blog/js/schemes/muse.js?v=7.4.1"></script>
+
+<script src="/blog/js/next-boot.js?v=7.4.1"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: 'fe7a3d11c21f79f6b093',
+      clientSecret: '4864c1982f4102ce367bd17735d807832809a76c',
+      repo: 'blog-md',
+      owner: 'xazeng',
+      admin: ['xazeng'],
+      id: 'a5d1c99d6a415d1c2594ba4357525786',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
+
+</body>
+</html>
