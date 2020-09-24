@@ -25,7 +25,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++11 条件变量">
 <meta property="og:url" content="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/index.html">
-<meta property="og:site_name" content="En&#39;s Blog">
+<meta property="og:site_name" content="Zen&#39;s Blog">
 <meta property="og:description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-02T03:05:54.970Z">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>c++11 条件变量 | En's Blog</title>
+  <title>c++11 条件变量 | Zen's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1"></script>
     <script>
@@ -106,7 +106,7 @@
 
     <a href="/blog/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">En's Blog</h1>
+      <h1 class="site-title">Zen's Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -174,12 +174,12 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="En">
+      <meta itemprop="name" content="Zen">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="En's Blog">
+      <meta itemprop="name" content="Zen's Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
@@ -347,7 +347,7 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">En</p>
+  <p class="site-author-name" itemprop="name">Zen</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -355,20 +355,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -399,7 +399,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">En</span>
+  <span class="author" itemprop="copyrightHolder">Zen</span>
 </div>
 
         

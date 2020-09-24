@@ -20,20 +20,20 @@
     var CONFIG = {"hostname":"blog.xazeng.com","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="vscode 已经是手头最常用的编辑器了，除了 c++ 工程还在用 visual studio，其他的开发任务目前都在用 vscode。这里记录下平常用的一些关键插件和配置。">
-<meta name="keywords" content="software,ide,vscode">
+  <meta name="description" content="每个项目开始，我都会对服务器的结构做一番思考，想说累积的经验可能会激发一些新的思路。这一次的梳理感觉变化比较大，在此做个记录。">
+<meta name="keywords" content="server,game">
 <meta property="og:type" content="article">
-<meta property="og:title" content="vscode 使用">
-<meta property="og:url" content="https://blog.xazeng.com/2020/09/04/others/vscode/index.html">
-<meta property="og:site_name" content="En&#39;s Blog">
-<meta property="og:description" content="vscode 已经是手头最常用的编辑器了，除了 c++ 工程还在用 visual studio，其他的开发任务目前都在用 vscode。这里记录下平常用的一些关键插件和配置。">
+<meta property="og:title" content="游戏服务器基础结构">
+<meta property="og:url" content="https://blog.xazeng.com/2020/09/23/develop/game-server/index.html">
+<meta property="og:site_name" content="Zen&#39;s Blog">
+<meta property="og:description" content="每个项目开始，我都会对服务器的结构做一番思考，想说累积的经验可能会激发一些新的思路。这一次的梳理感觉变化比较大，在此做个记录。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-09-15T02:23:40.467Z">
+<meta property="og:updated_time" content="2020-09-24T03:02:01.910Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="vscode 使用">
-<meta name="twitter:description" content="vscode 已经是手头最常用的编辑器了，除了 c++ 工程还在用 visual studio，其他的开发任务目前都在用 vscode。这里记录下平常用的一些关键插件和配置。">
+<meta name="twitter:title" content="游戏服务器基础结构">
+<meta name="twitter:description" content="每个项目开始，我都会对服务器的结构做一番思考，想说累积的经验可能会激发一些新的思路。这一次的梳理感觉变化比较大，在此做个记录。">
 
-<link rel="canonical" href="https://blog.xazeng.com/2020/09/04/others/vscode/">
+<link rel="canonical" href="https://blog.xazeng.com/2020/09/23/develop/game-server/">
 
 
 <script id="page-configurations">
@@ -46,7 +46,7 @@
   };
 </script>
 
-  <title>vscode 使用 | En's Blog</title>
+  <title>游戏服务器基础结构 | Zen's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1"></script>
     <script>
@@ -106,7 +106,7 @@
 
     <a href="/blog/" class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">En's Blog</h1>
+      <h1 class="site-title">Zen's Blog</h1>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
@@ -170,20 +170,20 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/2020/09/04/others/vscode/">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/2020/09/23/develop/game-server/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="En">
+      <meta itemprop="name" content="Zen">
       <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="En's Blog">
+      <meta itemprop="name" content="Zen's Blog">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          vscode 使用
+          游戏服务器基础结构
         </h1>
 
         <div class="post-meta">
@@ -193,14 +193,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-09-04 10:59:55" itemprop="dateCreated datePublished" datetime="2020-09-04T10:59:55+08:00">2020-09-04</time>
+              <time title="创建时间：2020-09-23 21:45:55" itemprop="dateCreated datePublished" datetime="2020-09-23T21:45:55+08:00">2020-09-23</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-15 10:23:40" itemprop="dateModified" datetime="2020-09-15T10:23:40+08:00">2020-09-15</time>
+                <time title="修改时间：2020-09-24 11:02:01" itemprop="dateModified" datetime="2020-09-24T11:02:01+08:00">2020-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -208,7 +208,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/blog/categories/others/" itemprop="url" rel="index"><span itemprop="name">未分类</span></a>
+                  <a href="/blog/categories/server/" itemprop="url" rel="index"><span itemprop="name">server</span></a>
                 </span>
             </span>
 
@@ -230,10 +230,31 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>vscode 已经是手头最常用的编辑器了，除了 c++ 工程还在用 visual studio，其他的开发任务目前都在用 vscode。这里记录下平常用的一些关键插件和配置。</p>
+        <p>每个项目开始，我都会对服务器的结构做一番思考，想说累积的经验可能会激发一些新的思路。这一次的梳理感觉变化比较大，在此做个记录。</p>
 <a id="more"></a>
 
-
+<hr>
+<h2 id="关于-skynet"><a href="#关于-skynet" class="headerlink" title="关于 skynet"></a>关于 skynet</h2><p>其实不是第一此接触 skynet 了，2013 年的时候曾经用它做过一个棋牌大厅的服务。现在想来那个时候真的经验尚浅，很多设计上的想法都比较稚嫩，而且对 skynet 本身的设计初衷的理解也不够，加上 skynet 也是刚刚开源不久，完整度和稳定性上还有一些欠缺，结果就是用起来感觉束手束脚，所以之后的项目就没在用它。  </p>
+<p>这次也是工作的原因，又遇上了，花了一些时间，也算做了一个比较深入的了解，看完之后确实受益匪浅。  </p>
+<hr>
+<h2 id="单线程-vs-多线程"><a href="#单线程-vs-多线程" class="headerlink" title="单线程 vs 多线程"></a>单线程 vs 多线程</h2><p>早期接触的游戏服务器大多都是分服的结构，所有游戏逻辑都在一个进程内，多线程的优势在于可以利用更多的cpu核心提高单服的在线，但是太过彻底的独立计算逻辑会导致锁的泛滥无形中提高了开发和维护的复杂度。这个时期我见过更多的做法是，将大部分游戏逻辑放在主线程中执行，然后把一些耗时的独立的计算分离出来给辅助线程执行。</p>
+<p>到后来手机游戏的时代，更多的是共服的结构。这个时期很多的公共服务都被从游服中剥离出来，比如公会、聊天、地图、副本等等，都被独立出来放到另外一个实例中运行。公共服务被剥离，那游服内的用户之间又互不干扰，天生就应该是多线程发光发热的地方。</p>
+<h2 id="c-还是-lua"><a href="#c-还是-lua" class="headerlink" title="c++ 还是 lua"></a>c++ 还是 lua</h2><p>这里说 lua，其实并不特指 lua，脚本语言很多特点都是类似的，只不过这里是基于 skynet 来说明，所以只好拿 lua 来说事了。</p>
+<p>lua 的优势在于它是动态语言，加上有 coroutine 的支持，为实现 rpc 提供了极大的便利。特别是在共服结构下 rpc 是非常常见的，如果每次 rpc 调用实现起来都很繁杂，业务开发的时候就非常难受了。<br>劣势也在于它是动态语言，没有编译期，很多错误只能在运行期发现；另外对多线程开发天生不友好，由于虚拟机的独立性，多线程间的数据共享会是一个问题，比如大量的配置数据。</p>
+<p>c++20 也开始支持 coroutine 了，这个有待考察。如果就 coroutine 而言 lua 是有优势的，lua 的 coroutine 是可以嵌套的，其它很多语言包括很多脚本语言都没有这个支持。</p>
+<h2 id="如果用-skynet"><a href="#如果用-skynet" class="headerlink" title="如果用 skynet"></a>如果用 skynet</h2><p>现在的 skynet 的生态算比较完整，我的顾虑有一下几点：  </p>
+<ul>
+<li><p>定制的 lua 源码<br>受限于这个定制，就算将来 luajit 支持新版本的 lua，大概率也是用不上了。<br>另外 lua 本身也还在更新，许多新特性需要等云风去同步 lua 版本。<br>还有就是如果定制有什么限制，如果云风自己遇到的，我相信他可以搞定，但是如果是自己的需求呢？</p>
+</li>
+<li><p>多线程间共享配置数据<br>skynet 提供了一个叫 sharetable 的功能可以解决这个问题，但是这个 sharetable 是要基于定制版的 lua 的。</p>
+</li>
+<li><p>每个用户一个独立服务<br>这个机制本身没有什么问题，包括性能上也不存在问题，但是要受限于上面两点。如果想脱离这种限制，我可能会考虑一个服务多个用户，然后多开几个这样的服务，由于线程数有限，就算配置数据较多，能被浪费的内存也有限，而且这种做法也不会影响多线程的发挥。当然也可以一个 skynet 进程开一个这样的服务，然后一台机器开多个这样的进程，但如果真的这样做，还需要用 skynet 吗？</p>
+</li>
+<li><p>服务权重问题<br>这一点我还需要再深入下，但是直觉上，由于服务数量比重不同会造成负载消耗速度有差异，可能会造成某些服务的负载堆积，进而影响整体的性能。</p>
+</li>
+<li><p>集群支持<br>skynet 是提供了 cluster 支持的，但是这种支持是基于服务的，我更希望的是基于 实体 的支持，这种实体可能存在于同一个服务之中，当然这也只是初步的构想，需要找时间实现看看。</p>
+</li>
+</ul>
 
     </div>
 
@@ -243,9 +264,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/blog/tags/software/" rel="tag"># software</a>
-              <a href="/blog/tags/ide/" rel="tag"># ide</a>
-              <a href="/blog/tags/vscode/" rel="tag"># vscode</a>
+              <a href="/blog/tags/server/" rel="tag"># server</a>
+              <a href="/blog/tags/game/" rel="tag"># game</a>
           </div>
 
         
@@ -254,13 +274,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/blog/2020/08/19/others/program-diff/" rel="prev" title="编程语言的差别速记">
-      <i class="fa fa-chevron-left"></i> 编程语言的差别速记
+    <a href="/blog/2020/09/21/develop/multi-server-logic/" rel="prev" title="跨服逻辑相关">
+      <i class="fa fa-chevron-left"></i> 跨服逻辑相关
     </a></div>
-      <div class="post-nav-item">
-    <a href="/blog/2020/09/05/me/cook/20200905/" rel="next" title="爆炒花蛤">
-      爆炒花蛤 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -320,12 +337,13 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于-skynet"><span class="nav-number">1.</span> <span class="nav-text">关于 skynet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单线程-vs-多线程"><span class="nav-number">2.</span> <span class="nav-text">单线程 vs 多线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-还是-lua"><span class="nav-number">3.</span> <span class="nav-text">c++ 还是 lua</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#如果用-skynet"><span class="nav-number">4.</span> <span class="nav-text">如果用 skynet</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">En</p>
+  <p class="site-author-name" itemprop="name">Zen</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -333,20 +351,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/blog/archives/">
         
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/blog/categories/">
           
-        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-count">11</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/blog/tags/">
           
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">26</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -377,7 +395,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">En</span>
+  <span class="author" itemprop="copyrightHolder">Zen</span>
 </div>
 
         
@@ -454,7 +472,7 @@ NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
       repo        : 'blog-md',
       owner       : 'xazeng',
       admin       : ['xazeng'],
-      id          : '9e18c728efe07bbaa38593175131cb56',
+      id          : '948a9eae1fc56b7419bea383658dfd3e',
         language: 'zh-CN',
       distractionFreeMode: true
     });

@@ -20,15 +20,20 @@
     var CONFIG = {"hostname":"blog.xazeng.com","root":"/blog/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"hide","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Zen&#39;s Blog">
-<meta property="og:url" content="https://blog.xazeng.com/categories/mysql/index.html">
+  <meta name="description" content="游戏服务器开发的过程中，会遇到很多需要执行跨服逻辑的情况，这里做点记录，免得每次都要重新思考。。。这里仅适用于游戏服务器开发，其它情境的例子也是仅供参考，并非最佳解决方案。">
+<meta name="keywords" content="server,game">
+<meta property="og:type" content="article">
+<meta property="og:title" content="跨服逻辑相关">
+<meta property="og:url" content="https://blog.xazeng.com/2020/09/21/develop/multi-server-logic/index.html">
 <meta property="og:site_name" content="Zen&#39;s Blog">
+<meta property="og:description" content="游戏服务器开发的过程中，会遇到很多需要执行跨服逻辑的情况，这里做点记录，免得每次都要重新思考。。。这里仅适用于游戏服务器开发，其它情境的例子也是仅供参考，并非最佳解决方案。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-09-24T03:02:01.911Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Zen&#39;s Blog">
+<meta name="twitter:title" content="跨服逻辑相关">
+<meta name="twitter:description" content="游戏服务器开发的过程中，会遇到很多需要执行跨服逻辑的情况，这里做点记录，免得每次都要重新思考。。。这里仅适用于游戏服务器开发，其它情境的例子也是仅供参考，并非最佳解决方案。">
 
-<link rel="canonical" href="https://blog.xazeng.com/categories/mysql/">
+<link rel="canonical" href="https://blog.xazeng.com/2020/09/21/develop/multi-server-logic/">
 
 
 <script id="page-configurations">
@@ -36,12 +41,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类: mysql | Zen's Blog</title>
+  <title>跨服逻辑相关 | Zen's Blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-100898985-1"></script>
     <script>
@@ -158,100 +163,124 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">mysql
-          <small>分类</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://blog.xazeng.com/2020/09/21/develop/multi-server-logic/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/blog/images/avatar.gif">
+      <meta itemprop="name" content="Zen">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zen's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          跨服逻辑相关
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-21 21:45:55" itemprop="dateCreated datePublished" datetime="2020-09-21T21:45:55+08:00">2020-09-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-24 11:02:01" itemprop="dateModified" datetime="2020-09-24T11:02:01+08:00">2020-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/blog/categories/server/" itemprop="url" rel="index"><span itemprop="name">server</span></a>
+                </span>
+            </span>
+
+          
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2020</span>
-    </div>
+        <p>游戏服务器开发的过程中，会遇到很多需要执行跨服逻辑的情况，这里做点记录，免得每次都要重新思考。。。这里仅适用于游戏服务器开发，其它情境的例子也是仅供参考，并非最佳解决方案。</p>
+<a id="more"></a>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2020-03-16T15:19:05+08:00"
-              content="2020-03-16">
-          03-16
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/blog/2020/03/16/mysql/mysql_ping-failed/" itemprop="url">
-            <span itemprop="name">mysql_ping 失敗</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-    <div class="collection-year">
-      <span class="collection-header">2019</span>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-08-01T15:57:14+08:00"
-              content="2019-08-01">
-          08-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/blog/2019/08/01/mysql/reconnect/" itemprop="url">
-            <span itemprop="name">mysql 重连处理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-08-01T15:19:05+08:00"
-              content="2019-08-01">
-          08-01
-        </time>
-      </div>
-
-      <div class="post-title">
-          <a class="post-title-link" href="/blog/2019/08/01/mysql/charset/" itemprop="url">
-            <span itemprop="name">mysql 字符集处理</span>
-          </a>
-      </div>
-
-    </header>
-  </article>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>先把结论写这，后续慢慢修改。  </p>
+<ul>
+<li><p>多数情况不用特别处理。<br>鉴于内网的稳定性，多数情况下并不需要对逻辑中断进行处理，只需要在中断发生时写好日志，预留修复接口或者干脆停服更新时统一修复。<br>这种做法会极大减轻业务的复杂程度。<br>可以参考玩家加入公会：先在公会中登记玩家，再在玩家数据上登记公会。在玩家和公会上都留下动态修复接口或者停服更新时进行对比修复。</p>
+</li>
+<li><p>缓存和数据库一致性需要做落地确认<br>缓存需要加脏标记和数据版本，方便落地时的确认。  </p>
+</li>
+<li><p>关键数据可以用分布式锁等方式来保证结果<br>比如判断库存和减库存的操作。</p>
+</li>
+</ul>
 
     </div>
-  </div>
-  
-  
-  
 
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/blog/tags/server/" rel="tag"># server</a>
+              <a href="/blog/tags/game/" rel="tag"># game</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/blog/2020/09/10/me/20200910/" rel="prev" title="现实是">
+      <i class="fa fa-chevron-left"></i> 现实是
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/blog/2020/09/23/develop/game-server/" rel="next" title="游戏服务器基础结构">
+      游戏服务器基础结构 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
   
 
 
 
           </div>
           
+    <div class="comments" id="gitalk-container"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -298,6 +327,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">1.</span> <span class="nav-text">结论</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -421,6 +451,25 @@
 
   
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+NexT.utils.loadComments(document.querySelector('#gitalk-container'), () => {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID    : 'fe7a3d11c21f79f6b093',
+      clientSecret: '4864c1982f4102ce367bd17735d807832809a76c',
+      repo        : 'blog-md',
+      owner       : 'xazeng',
+      admin       : ['xazeng'],
+      id          : 'cf1c99d2be418174a64da53763734757',
+        language: 'zh-CN',
+      distractionFreeMode: true
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+});
+</script>
 
 </body>
 </html>
