@@ -21,7 +21,7 @@
   </script>
 
   <meta name="description" content="比较常见的一个使用 std::condition_variable  场合就是线程池的消息队列。逻辑线程（可能多个）将消息推入消息队列，线程池中的工作线程（多个）会从消息队列中取出消息进行处理，如果队列中没有消息则进入睡眠状态等待消息。 本文将通过这种消息队列的实现，来分析如何使用 std::condition_variable 以及使用过程中的注意事项。">
-<meta name="keywords" content="cpp11,cpp">
+<meta name="keywords" content="cpp,cpp11">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c++11 条件变量">
 <meta property="og:url" content="https://blog.xazeng.com/2019/08/01/cpp/condition-variable/index.html">
@@ -174,7 +174,7 @@
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/blog/images/avatar.gif">
-      <meta itemprop="name" content="Zen">
+      <meta itemprop="name" content="Zen XA">
       <meta itemprop="description" content="">
     </span>
 
@@ -265,8 +265,8 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/blog/tags/cpp11/" rel="tag"># cpp11</a>
               <a href="/blog/tags/cpp/" rel="tag"># cpp</a>
+              <a href="/blog/tags/cpp11/" rel="tag"># cpp11</a>
           </div>
 
         
@@ -347,7 +347,7 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">Zen</p>
+  <p class="site-author-name" itemprop="name">Zen XA</p>
   <div class="site-description" itemprop="description"></div>
 </div>
 <div class="site-state-wrap motion-element">
@@ -399,7 +399,7 @@
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">Zen</span>
+  <span class="author" itemprop="copyrightHolder">Zen XA</span>
 </div>
 
         
